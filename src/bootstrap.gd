@@ -9,6 +9,7 @@ const MODE_SCENES := {
 
 
 func _ready() -> void:
+	EdgegapServer.prepare_environment()
 	var configuration := CommandLineConfig.parse(
 		OS.get_cmdline_user_args(),
 		OS.has_feature("dedicated_server")
@@ -19,6 +20,7 @@ func _ready() -> void:
 		get_tree().quit(configuration.exit_code)
 		return
 
+	EdgegapServer.apply_command_line(configuration)
 	get_tree().root.set_meta("ssf_command_line", configuration)
 	if OS.has_feature("ssf_shipping") and (configuration.mode in ["tests", "bot_client"] or (OS.has_feature("dedicated_server") and configuration.mode != "server")):
 		print("SSF_STARTUP_ERROR=This mode is not included in this shipping package.")
