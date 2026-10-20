@@ -33,9 +33,9 @@ static func decode_query(packet: PackedByteArray) -> Dictionary:
 
 
 static func encode_response(nonce: String, server_state: Dictionary) -> PackedByteArray:
-	var server_name := String(server_state.get("server_name", "Super Star Fighter Server")).strip_edges().left(MAX_SERVER_NAME_LENGTH)
+	var server_name := String(server_state.get("server_name", "Edgegap Arena Shooter Server")).strip_edges().left(MAX_SERVER_NAME_LENGTH)
 	if not _is_safe_text(server_name):
-		server_name = "Super Star Fighter Server"
+		server_name = "Edgegap Arena Shooter Server"
 	return JSON.stringify({
 		"magic": RESPONSE_MAGIC,
 		"nonce": nonce.left(MAX_NONCE_LENGTH),

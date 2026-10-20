@@ -13,7 +13,7 @@ static func parse(arguments: PackedStringArray, dedicated_server_feature: bool =
 		"mode": "server" if dedicated_server_feature else "client",
 		"port": GameConstants.DEFAULT_PORT,
 		"host": "127.0.0.1",
-		"server_name": "Super Star Fighter Server",
+		"server_name": "Edgegap Arena Shooter Server",
 		"lobby_password": "",
 		"lobby_password_file": "",
 		"admin_port": 0,
@@ -209,7 +209,7 @@ static func parse(arguments: PackedStringArray, dedicated_server_feature: bool =
 				return parsed_duration
 			result.test_server_duration = parsed_duration.value
 		elif argument.begins_with("--"):
-			return _error("Unknown Super Star Fighter option: %s" % argument)
+			return _error("Unknown Edgegap Arena Shooter option: %s" % argument)
 
 	if explicit_modes.size() > 1:
 		return _error("Choose only one startup mode: --server, --run-tests, or --bot-client.")
