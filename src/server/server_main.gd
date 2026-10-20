@@ -17,6 +17,7 @@ func _ready() -> void:
 		push_error(bridge.last_error)
 		get_tree().quit(3)
 		return
+	EdgegapServer.attach(self, bridge)
 	var admin_port := int(configuration.get("admin_port", 0))
 	if admin_port > 0:
 		remote_admin = RemoteAdminServiceScript.new()

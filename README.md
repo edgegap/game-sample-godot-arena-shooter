@@ -1,4 +1,8 @@
-# Super Star Fighter
+> **Edgegap sample:** this fork runs on Edgegap dedicated servers with matchmaking. See [EDGEGAP.md](EDGEGAP.md).
+
+# Edgegap Arena Shooter
+
+A fork of [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFighter) by Dumpster Fire Labs. The upstream documentation below still uses the original name.
 
 Super Star Fighter is a top-down multiplayer arena shooter for up to 32 pilots. Every round you draft a new upgrade card, the cards stack without limit, and a sensible little starter ship slowly becomes a screen-filling mechanical disaster. Then you take it into the arena against your friends.
 

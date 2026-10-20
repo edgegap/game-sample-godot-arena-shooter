@@ -89,7 +89,7 @@ func create_ui(configuration: Dictionary) -> void:
 	content.add_theme_constant_override("separation", 16)
 	connection_form_panel.add_child(content)
 	var title := Label.new()
-	title.text = "✦ SUPER STAR FIGHTER ✦"
+	title.text = "✦ EDGEGAP ARENA SHOOTER ✦"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.theme_type_variation = &"ScreenTitle"
 	title.add_theme_font_size_override("font_size", 48)
@@ -119,6 +119,7 @@ func create_ui(configuration: Dictionary) -> void:
 	_create_lan_join_tab()
 	_create_direct_join_tab(configuration)
 	_create_host_tab(configuration)
+	EdgegapFindMatch.install(self, connection_tabs)
 	var buttons := HBoxContainer.new()
 	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
 	buttons.add_theme_constant_override("separation", 8)
@@ -410,7 +411,7 @@ func _validated_port(field: LineEdit, reserve_discovery_port: bool = false) -> i
 func _refresh_lan_servers() -> void:
 	if lan_browser != null:
 		lan_browser.refresh_now()
-	connection_status.text = "Scanning the local network for Super Star Fighter servers…"
+	connection_status.text = "Scanning the local network for Edgegap Arena Shooter servers…"
 
 
 func _on_lan_servers_updated(servers: Array[Dictionary]) -> void:
