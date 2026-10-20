@@ -180,7 +180,7 @@ func create_ui() -> void:
 	champion_content.add_theme_constant_override("separation", 2)
 	champion_panel.add_child(champion_content)
 	var champion_kicker := Label.new()
-	champion_kicker.text = "SUPER STAR CHAMPION"
+	champion_kicker.text = "ARENA CHAMPION"
 	champion_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	champion_kicker.theme_type_variation = &"Kicker"
 	champion_content.add_child(champion_kicker)

@@ -20,7 +20,7 @@ const CardHoverButtonScript = preload("res://src/client/ui/card_hover_button.gd"
 const DesignTokensScript = preload("res://src/client/ui/design_tokens.gd")
 const ShipAppearanceScript = preload("res://src/shared/models/ship_appearance.gd")
 const CROSSHAIR_TEXTURE: Texture2D = preload("res://assets/ui/crosshair.svg")
-const DUMPSTER_FIRE_LABS_TEXTURE: Texture2D = preload("res://assets/ui/dumpster_fire_labs.png")
+const DUMPSTER_FIRE_LABS_TEXTURE: Texture2D = null  # Upstream studio logo is not licensed for forks.
 const STUDIO_SPLASH_AUTO_ADVANCE_SECONDS: float = 4.0
 const SPLASH_AUTO_ADVANCE_SECONDS: float = 10.0
 const HEAT_BEGIN_LEAD_SECONDS: float = 0.10
@@ -491,7 +491,7 @@ func _create_update_notice() -> void:
 
 func _on_update_available(version: String, url: String) -> void:
 	_pending_update_url = url
-	update_notice.dialog_text = "Super Star Fighter %s is out — you're on %s.\nGrab the new build so you can keep joining the latest servers." % [version, GameConstants.GAME_VERSION]
+	update_notice.dialog_text = "Edgegap Arena Shooter %s is out — you're on %s.\nGrab the new build so you can keep joining the latest servers." % [version, GameConstants.GAME_VERSION]
 	_show_pending_update_notice()
 
 
@@ -707,7 +707,7 @@ func _create_splash_screen() -> void:
 	studio_content.add_child(studio_logo)
 	var quote := Label.new()
 	quote.name = "StudioQuote"
-	quote.text = "“Now with 1000% more slop!”"
+	quote.text = "An Edgegap dedicated-server sample"
 	quote.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	quote.add_theme_font_size_override("font_size", 30)
 	quote.add_theme_color_override("font_color", Color("ffe7a8"))
@@ -732,7 +732,7 @@ func _create_splash_screen() -> void:
 	logo.custom_minimum_size = Vector2(520.0, 300.0)
 	content.add_child(logo)
 	var title := Label.new()
-	title.text = "SUPER STAR FIGHTER"
+	title.text = "EDGEGAP ARENA SHOOTER"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 68)
 	title.add_theme_color_override("font_color", DesignTokensScript.BRAND_CYAN)

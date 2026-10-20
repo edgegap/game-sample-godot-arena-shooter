@@ -288,7 +288,7 @@ func _lan_discovery_payload() -> Dictionary:
 	var result := {
 		"instance_id": _discovery_instance_id,
 		"protocol_version": GameConstants.PROTOCOL_VERSION,
-		"server_name": String(_configuration.get("server_name", "Super Star Fighter Server")),
+		"server_name": String(_configuration.get("server_name", "Edgegap Arena Shooter Server")),
 		"game_port": int(_configuration.get("port", GameConstants.DEFAULT_PORT)),
 		"password_required": true,
 	}

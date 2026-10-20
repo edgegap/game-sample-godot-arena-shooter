@@ -6,7 +6,7 @@ extends Node
 
 signal update_available(version: String, url: String)
 
-const LATEST_RELEASE_URL: String = "https://api.github.com/repos/DumpsterFireLabs/SuperStarFighter/releases/latest"
+const LATEST_RELEASE_URL: String = "https://api.github.com/repos/edgegap/godot-sample-arena-shooter/releases/latest"
 const RELEASES_PAGE_PREFIX: String = "https://github.com/DumpsterFireLabs/SuperStarFighter/releases/"
 const FALLBACK_RELEASE_PAGE: String = RELEASES_PAGE_PREFIX + "latest"
 const REQUEST_TIMEOUT_SECONDS: float = 8.0
