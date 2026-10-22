@@ -1,10 +1,10 @@
-# Super Star Fighter — Player and Host Manual
+# Edgegap Arena Shooter — Player and Host Manual
 
 **Applies to:** current Windows vertical slice  
 **Engine:** Godot 4.7.2  
 **Players:** 2–32 total human/NPC participants; one human may start when NPC fill is enabled
 
-This manual explains how to launch, host, join, play, troubleshoot, and run a good Super Star Fighter session. Exact implementation values live in the [authoritative specification](design/spec.md).
+This manual explains how to launch, host, join, play, troubleshoot, and run a good Edgegap Arena Shooter session. Exact implementation values live in the [authoritative specification](design/spec.md).
 
 ## Contents
 
@@ -26,7 +26,7 @@ This manual explains how to launch, host, join, play, troubleshoot, and run a go
 
 ## 1. What Kind of Game Is This?
 
-Super Star Fighter is a top-down space shooter about mechanical skill, solo or team objectives, and increasingly unreasonable upgrades.
+Edgegap Arena Shooter is a top-down space shooter about mechanical skill, solo or team objectives, and increasingly unreasonable upgrades.
 
 Every match is made of rounds, and every round is made of heats governed by the lobby's selected game mode. Before round one, every pilot receives a private draw of five cards and chooses one. Before later rounds, everyone except the previous solo round winner—or every member of the previous winning team—drafts another card. The cards permanently modify that pilot's build for the remainder of the match.
 
@@ -162,7 +162,7 @@ Parameters:
 | Parameter | Range | Default | Meaning |
 | --- | ---: | ---: | --- |
 | `Port` | 1024–65535 | 7000 | Gameplay TCP (WebSocket) port |
-| `ServerName` | 1–40 printable characters | Super Star Fighter Server | LAN browser name |
+| `ServerName` | 1–40 printable characters | Edgegap Arena Shooter Server | LAN browser name |
 | `PasswordFile` | Readable one-line file | Prompt | Lobby password source for unattended startup |
 | `AdminPort` | 0 or 1024–65535 | 0 | Optional loopback-only TCP command listener; 0 disables only that listener |
 | `AdminPasswordFile` | Readable one-line file | Prompt when AdminPort is set | Distinct admin credential; enables in-game administration even with AdminPort 0 |
@@ -199,7 +199,7 @@ Runtime setting and password changes apply to the current server process only. T
 
 ### 4.6 Internet hosting and firewalls
 
-Super Star Fighter carries all gameplay over one WebSocket (TCP) connection per player. Forward TCP, not UDP. Because TCP delivers everything in order, a lost packet briefly holds back later snapshots and input until it is retransmitted; on a lossy link this shows as short freezes followed by catch-up rather than skipped frames.
+Edgegap Arena Shooter carries all gameplay over one WebSocket (TCP) connection per player. Forward TCP, not UDP. Because TCP delivers everything in order, a lost packet briefly holds back later snapshots and input until it is retransmitted; on a lossy link this shows as short freezes followed by catch-up rather than skipped frames.
 
 For internet play, the host normally needs to:
 
@@ -218,14 +218,14 @@ A Linux dedicated server can sit behind a [Cloudflare Tunnel](https://developers
 
    ```bash
    cloudflared tunnel login
-   cloudflared tunnel create ssf
-   cloudflared tunnel route dns ssf game.example.com
+   cloudflared tunnel create arena-shooter
+   cloudflared tunnel route dns arena-shooter game.example.com
    ```
 
 3. Point the tunnel at the game server in `~/.cloudflared/config.yml`:
 
    ```yaml
-   tunnel: ssf
+   tunnel: arena-shooter
    credentials-file: /home/YOU/.cloudflared/<tunnel-id>.json
    ingress:
      - hostname: game.example.com
@@ -237,7 +237,7 @@ A Linux dedicated server can sit behind a [Cloudflare Tunnel](https://developers
 
    ```bash
    ./start-server.sh --port=7000 --bind=127.0.0.1 --behind-proxy --password-file="$PWD/secrets/lobby.txt"
-   cloudflared tunnel run ssf
+   cloudflared tunnel run arena-shooter
    ```
 
 5. Players choose **Direct Connect**, enter `wss://game.example.com` and the lobby password.
@@ -633,7 +633,7 @@ The **Accessibility** tab provides:
 
 These options apply immediately to online play and the offline laboratory. Navigate settings with `Tab` / `Shift+Tab` or the controller D-pad; left / right adjusts HUD size. The settings tabs and toggles also support controller navigation.
 
-All display, audio, flight-mode, profile, deadzone, binding, and accessibility settings save automatically to Godot's per-user `super_star_fighter_settings.cfg` and persist between launches.
+All display, audio, flight-mode, profile, deadzone, binding, and accessibility settings save automatically to Godot's per-user `edgegap_arena_shooter_settings.cfg` and persist between launches.
 
 The game safely runs without authored audio: combat effects are synthesized, victory has a generated fallback, and absent music is skipped. Repository maintainers can add real music and sound effects without code changes by following the [audio drop-in contract](../assets/audio/README.md).
 

@@ -1,7 +1,7 @@
 class_name DesignTokens
 extends RefCounted
 
-## Super Star Fighter's UI language: a quiet tactical surface with neon reserved
+## Edgegap Arena Shooter's UI language: a quiet tactical surface with neon reserved
 ## for identity, interaction, and state. Keep domain colours (rarity/resources)
 ## separate from these semantic interface roles.
 

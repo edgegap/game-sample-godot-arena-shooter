@@ -22,7 +22,7 @@ func check(current_version: String = GameConstants.GAME_VERSION) -> void:
 	_request.timeout = REQUEST_TIMEOUT_SECONDS
 	add_child(_request)
 	_request.request_completed.connect(_on_request_completed.bind(current_version))
-	var headers := PackedStringArray(["Accept: application/vnd.github+json", "User-Agent: SuperStarFighter/%s" % current_version])
+	var headers := PackedStringArray(["Accept: application/vnd.github+json", "User-Agent: EdgegapArenaShooter/%s" % current_version])
 	if _request.request(LATEST_RELEASE_URL, headers) != OK:
 		_finish()
 

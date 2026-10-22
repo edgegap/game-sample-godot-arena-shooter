@@ -86,7 +86,7 @@ jobs:
         run: |
           label=$(python -c "import sys; sys.path.insert(0, 'tools'); from release_metadata import load_release; print(load_release()['label'])")
           gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft --prerelease \
-            --title "Super Star Fighter $label" --generate-notes \
+            --title "Edgegap Arena Shooter $label" --generate-notes \
             builds/release/*.zip builds/release/server/*.zip \
             builds/release/server-linux-*/*.tar.gz builds/release/server-linux-*/*.zip \
             builds/release/SHA256SUMS.txt

@@ -12,7 +12,7 @@ if (-not $SkipFoundationGate) {
 }
 $buildRoot = Join-Path $SsfRepositoryRoot "$($SsfRelease.directory)/server-linux-$Architecture"
 New-Item -ItemType Directory -Path $buildRoot -Force | Out-Null
-$serverPath = Join-Path $buildRoot "SuperStarFighter-Server.$Architecture"
+$serverPath = Join-Path $buildRoot "EdgegapArenaShooter-Server.$Architecture"
 $godot = Get-SsfGodotExecutable
 $ErrorActionPreference = 'Continue'
 $output = (& $godot --headless --path $SsfRepositoryRoot --export-release "Linux $Architecture Dedicated Server" $serverPath 2>&1 | Out-String)

@@ -1,4 +1,4 @@
-# Super Star Fighter — Vertical Slice Specification
+# Edgegap Arena Shooter — Vertical Slice Specification
 
 **Status:** Approved implementation baseline  
 **Engine:** Godot 4.7.2 Standard, GDScript  
@@ -69,7 +69,7 @@ The same project supplies client, server, tests, and protocol test-client entry 
 | --- | --- | --- | --- |
 | `--server` | Server | Off | Starts authoritative headless server mode. |
 | `--port=<1024-65535>` | Server/client | `7000` | Selects the gameplay TCP (WebSocket) port. |
-| `--server-name=<name>` | Server | `Super Star Fighter Server` | Sets the bounded display name advertised to LAN browsers. |
+| `--server-name=<name>` | Server | `Edgegap Arena Shooter Server` | Sets the bounded display name advertised to LAN browsers. |
 | `--password=<password>` | Server/bot client | Required fallback | Supplies the 1–64 printable-character lobby password; intended for tests because process arguments may be observable. |
 | `--password-file=<path>` / `SSF_LOBBY_PASSWORD` | Server/bot client | Preferred | Reads the lobby password from a protected one-line file or process environment. |
 | `--admin-port=<1024-65535>` | Server | Disabled | Enables the authenticated TCP admin service on loopback only; must differ from gameplay and discovery ports. |
@@ -654,8 +654,8 @@ Control and objective payloads may use typed Godot arrays/dictionaries because t
 
 ### 11.4 Release Artifacts
 
-- `SuperStarFighter.exe` Windows x64 client export.
-- `SuperStarFighterServer.exe` stripped Windows x64 dedicated-server export.
+- `EdgegapArenaShooter.exe` Windows x64 client export.
+- `EdgegapArenaShooterServer.exe` stripped Windows x64 dedicated-server export.
 - Automated test runner and 2-client smoke-test script.
 - Configurable 32-client soak-test script.
 - Export script that fails nonzero when tests or export fail.

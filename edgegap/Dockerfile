@@ -1,7 +1,7 @@
 # Edgegap game server image for the Linux x86_64 dedicated server package.
 #   python tools/build.py build server-linux-x64
 #   docker build --platform linux/amd64 -f edgegap/Dockerfile \
-#     --build-arg PACKAGE=SuperStarFighter-Beta19-Server-Linux-x64.tar.gz \
+#     --build-arg PACKAGE=EdgegapArenaShooter-Beta19-Server-Linux-x64.tar.gz \
 #     -t registry.edgegap.com/<project>/arena-shooter:<tag> builds/beta-19/server-linux-x86_64
 # Gameplay is one WebSocket (TCP) port, 7000. On Edgegap the lobby password is
 # the deployment's request ID (src/shared/edgegap/edgegap_server.gd).
@@ -12,10 +12,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 1000 server
 
-ARG PACKAGE=SuperStarFighter-Beta19-Server-Linux-x64.tar.gz
+ARG PACKAGE=EdgegapArenaShooter-Beta19-Server-Linux-x64.tar.gz
 WORKDIR /server
 ADD ${PACKAGE} /server/
-RUN mv /server/SuperStarFighter-Server.x86_64 /server/server.x86_64 \
+RUN mv /server/EdgegapArenaShooter-Server.x86_64 /server/server.x86_64 \
     && chmod +x /server/server.x86_64 \
     && chown -R server:server /server
 
