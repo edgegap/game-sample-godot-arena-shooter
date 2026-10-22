@@ -1,4 +1,4 @@
-# Super Star Fighter Documentation
+# Edgegap Arena Shooter Documentation
 
 This directory holds practical guides at the top level, the authoritative design documents in [`design/`](./design/), and dated reviews and measurement evidence in [`archive/`](./archive/).
 

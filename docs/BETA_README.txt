@@ -1,16 +1,16 @@
-SUPER STAR FIGHTER — {{LABEL}}
+EDGEGAP ARENA SHOOTER — {{LABEL}}
 Version {{VERSION}}
 
 QUICK START
 
 1. Extract the entire ZIP to a writable folder.
-2. On Windows, run SuperStarFighter-{{TAG}}.exe.
-   On Linux, run: chmod +x SuperStarFighter-{{TAG}}.x86_64 && ./SuperStarFighter-{{TAG}}.x86_64
-   On Linux ARM64/Raspberry Pi with a 64-bit OS, run: chmod +x SuperStarFighter-{{TAG}}.arm64 && ./SuperStarFighter-{{TAG}}.arm64
-   On macOS, Control-click Super Star Fighter.app, choose Open, then confirm Open.
+2. On Windows, run EdgegapArenaShooter-{{TAG}}.exe.
+   On Linux, run: chmod +x EdgegapArenaShooter-{{TAG}}.x86_64 && ./EdgegapArenaShooter-{{TAG}}.x86_64
+   On Linux ARM64/Raspberry Pi with a 64-bit OS, run: chmod +x EdgegapArenaShooter-{{TAG}}.arm64 && ./EdgegapArenaShooter-{{TAG}}.arm64
+   On macOS, Control-click Edgegap Arena Shooter.app, choose Open, then confirm Open.
    If macOS instead says the app is damaged, open Terminal in the extracted folder and run:
 
-     xattr -cr "Super Star Fighter.app"
+     xattr -cr "Edgegap Arena Shooter.app"
 
    Then Control-click the app and choose Open again. Only clear the attributes after verifying
    the supplied SHA-256 checksum; this command is needed because the beta is not notarized.
@@ -24,17 +24,17 @@ The normal Linux launch uses Godot's Compatibility renderer through desktop Open
 
 If a Linux machine has native OpenGL ES 3.0 through Mesa but does not expose desktop OpenGL 3.3, try:
 
-  ./SuperStarFighter-{{TAG}}.arm64 --rendering-method gl_compatibility --rendering-driver opengl3_es --verbose
+  ./EdgegapArenaShooter-{{TAG}}.arm64 --rendering-method gl_compatibility --rendering-driver opengl3_es --verbose
 
-For Linux x64, replace SuperStarFighter-{{TAG}}.arm64 with SuperStarFighter-{{TAG}}.x86_64.
+For Linux x64, replace EdgegapArenaShooter-{{TAG}}.arm64 with EdgegapArenaShooter-{{TAG}}.x86_64.
 
 If the machine has a working Vulkan driver, including Mesa V3DV on a suitably configured Raspberry Pi, the Mobile renderer is another possible fallback:
 
-  ./SuperStarFighter-{{TAG}}.arm64 --rendering-method mobile --rendering-driver vulkan --verbose
+  ./EdgegapArenaShooter-{{TAG}}.arm64 --rendering-method mobile --rendering-driver vulkan --verbose
 
 As a slow last resort on Mesa systems, software rendering may work:
 
-  LIBGL_ALWAYS_SOFTWARE=1 ./SuperStarFighter-{{TAG}}.arm64 --rendering-method gl_compatibility --rendering-driver opengl3 --verbose
+  LIBGL_ALWAYS_SOFTWARE=1 ./EdgegapArenaShooter-{{TAG}}.arm64 --rendering-method gl_compatibility --rendering-driver opengl3 --verbose
 
 These are compatibility suggestions, not native acceptance-tested configurations. Renderer overrides may change appearance or performance, and software rendering can be very slow. Godot 4 requires at least OpenGL ES 3.0 for its Compatibility renderer; GLES 2-only hardware is not supported. Use a current 64-bit OS and current Mesa/V3D drivers on Raspberry Pi.
 
@@ -72,7 +72,7 @@ The launcher securely prompts for a lobby password and a distinct admin password
 
 For unattended startup, store each password as one line in a separately access-controlled file outside the repository:
 
-  .\tools\start-server.ps1 -Port 7000 -ServerName "Friday Fight Night" -AdminPort 7001 -MaxPlayers 32 -RoundsToWin 3 -PasswordFile "C:\ServerSecrets\ssf-lobby.txt" -AdminPasswordFile "C:\ServerSecrets\ssf-admin.txt" -BanFile "C:\ServerData\ssf-bans.json"
+  .\tools\start-server.ps1 -Port 7000 -ServerName "Friday Fight Night" -AdminPort 7001 -MaxPlayers 32 -RoundsToWin 3 -PasswordFile "C:\ServerSecrets\arena-shooter-lobby.txt" -AdminPasswordFile "C:\ServerSecrets\arena-shooter-admin.txt" -BanFile "C:\ServerData\arena-shooter-bans.json"
 
 The selected gameplay port is TCP (WebSocket) and must be allowed through the firewall. Forward that TCP port at the router for direct internet hosting. UDP 7359 is LAN discovery only. The admin port is TCP but binds only to 127.0.0.1; never expose it directly through a public TCP proxy.
 

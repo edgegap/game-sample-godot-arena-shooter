@@ -12,7 +12,7 @@ $releaseLabel = "$($SsfRelease.label)"
 $expectedGameVersion = "$($SsfRelease.version)"
 $expectedBundleVersion = "$($SsfRelease.platform_version)"
 $buildRoot = Join-Path $SsfRepositoryRoot "$($SsfRelease.directory)"
-$archivePath = Join-Path $buildRoot "SuperStarFighter-$($SsfRelease.tag)-macOS-universal.zip"
+$archivePath = Join-Path $buildRoot "EdgegapArenaShooter-$($SsfRelease.tag)-macOS-universal.zip"
 
 function Assert-BetaBuildPath {
     param([Parameter(Mandatory = $true)][string]$Path)
@@ -150,7 +150,7 @@ try {
     } finally {
         $plistReader.Dispose()
     }
-    if (-not $plistText.Contains('com.dumpsterfirelabs.superstarfighter') -or -not $plistText.Contains($expectedBundleVersion)) {
+    if (-not $plistText.Contains('com.edgegap.arenashooter') -or -not $plistText.Contains($expectedBundleVersion)) {
         throw 'macOS Info.plist does not contain the expected bundle identifier and version.'
     }
 

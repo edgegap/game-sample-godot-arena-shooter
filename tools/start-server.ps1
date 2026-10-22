@@ -2,7 +2,7 @@ param(
     [ValidateRange(1024, 65535)]
     [int]$Port = 7000,
     [ValidateLength(1, 40)]
-    [string]$ServerName = 'Super Star Fighter Server',
+    [string]$ServerName = 'Edgegap Arena Shooter Server',
     [string]$PasswordFile,
     [ValidateRange(0, 65535)]
     [int]$AdminPort = 0,
@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$packagedServer = Join-Path $PSScriptRoot 'SuperStarFighter-Server.exe'
+$packagedServer = Join-Path $PSScriptRoot 'EdgegapArenaShooter-Server.exe'
 if (-not $ServerExecutable -and (Test-Path -LiteralPath $packagedServer -PathType Leaf)) {
     $ServerExecutable = $packagedServer
 }

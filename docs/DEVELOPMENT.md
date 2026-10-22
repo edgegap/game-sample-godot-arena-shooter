@@ -1,4 +1,4 @@
-# Super Star Fighter — Development Guide
+# Edgegap Arena Shooter — Development Guide
 
 This guide is for contributors working on the Godot source project. For gameplay and hosting, use the [Player and Host Manual](./MANUAL.md). For exact observable requirements, use the [authoritative specification](design/spec.md).
 
@@ -479,7 +479,7 @@ python tools/verify-network-impairment.py --seeds 3
 python tools/update-export-policy.py --check
 python tools/verify-attribution.py
 ./tools/build-server.ps1
-./tools/verify-soak.ps1 -ClientCount 32 -DurationSeconds 90 -ServerExecutable builds/server/SuperStarFighter-Server.exe
+./tools/verify-soak.ps1 -ClientCount 32 -DurationSeconds 90 -ServerExecutable builds/server/EdgegapArenaShooter-Server.exe
 ```
 
 The impairment harness needs Python 3.11+ and the bootstrapped engine. It binds only loopback TCP, starts a hidden Godot child and changes no firewall or operating-system network rules. `tools/tcp_link_proxy.py` impairs the real byte stream in both directions, including control traffic, as TCP presents faults to the application: order-preserving delay/jitter, loss as a 200 ms retransmission stall that blocks later bytes, blackouts as held delivery and limited bandwidth as reader backpressure. Reordering and duplication are invisible above TCP and have no profile. A `tail_loss` profile stalls upstream traffic during settlement to exercise retry of the final neutral input. A `high_latency` profile (about 260 ms round trip, no loss) must keep at least 18 of the 20 player snapshots per second: distance alone is not congestion, and only the transport probes may thin snapshots. Every profile reports the snapshot rate observed during combat. The fixture resends one stable neutral sequence at the normal input cadence until it is acknowledged, then separately checks replay drainage and durable resource equality. Coverage is established before cloak inhibits weapons. Logs include pending count and sequence bounds, server/snapshot acknowledgments, cooldown/shield state, neutral retry count, movement correction p95/p99/max and snap count.
@@ -499,8 +499,8 @@ The server package includes `start-server.ps1` and `admin.ps1`. The launcher sup
 Health windows use ten seconds of wall time even while idle or paused. Admin `status` returns the latest window, its age and uptime. Alongside callback work, the soak requires at least 57 physics callbacks/second in full windows and no more than 1% of callbacks over 16.67 ms. Its wall-clock deadline prevents a stalled simulation from hanging verification indefinitely. Replication byte rates exclude transport overhead and other control RPCs. To validate a candidate package:
 
 ```powershell
-.\tools\verify-server-operations.ps1 -ServerExecutable .\builds\server\SuperStarFighter-Server.exe
-.\tools\verify-soak.ps1 -ClientCount 32 -DurationSeconds 600 -ServerExecutable .\builds\server\SuperStarFighter-Server.exe
+.\tools\verify-server-operations.ps1 -ServerExecutable .\builds\server\EdgegapArenaShooter-Server.exe
+.\tools\verify-soak.ps1 -ClientCount 32 -DurationSeconds 600 -ServerExecutable .\builds\server\EdgegapArenaShooter-Server.exe
 ```
 
 See [the dedicated-server runbook](SERVER_README.txt) for launch and administration commands.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Loopback administration for a Super Star Fighter dedicated server (Python 3)."""
+"""Loopback administration for a Edgegap Arena Shooter dedicated server (Python 3)."""
 import argparse
 import getpass
 import hashlib

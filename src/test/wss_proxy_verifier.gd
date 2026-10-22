@@ -37,7 +37,7 @@ func _run() -> void:
 		if argument.begins_with("--cert-dir="): cert_dir = argument.get_slice("=", 1)
 	var crypto := Crypto.new()
 	var key := crypto.generate_rsa(2048)
-	var certificate := crypto.generate_self_signed_certificate(key, "CN=localhost,O=SSF Proxy Fixture,C=US")
+	var certificate := crypto.generate_self_signed_certificate(key, "CN=localhost,O=Arena Shooter Proxy Fixture,C=US")
 	if key.save(cert_dir.path_join("key.pem")) != OK or certificate.save(cert_dir.path_join("cert.pem")) != OK:
 		_fail("could not write fixture certificate")
 		return

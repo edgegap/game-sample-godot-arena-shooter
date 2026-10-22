@@ -1,4 +1,4 @@
-# Super Star Fighter — Multiplayer Vertical Slice
+# Edgegap Arena Shooter — Multiplayer Vertical Slice
 
 ## Summary
 
@@ -45,7 +45,7 @@ The workspace contains a complete vertical slice with a Windows client, headless
 - Expose reliable client requests for handshake, lobby start/settings, and card selection. Validate the requesting peer from the RPC sender rather than trusting IDs in payloads.
 - Use compact snapshot payloads with stable entity IDs. Reject malformed, stale, non-finite, out-of-range, excessive-rate, and protocol-incompatible input. Reconcile every predicted projectile in a multi-shot volley against the shared authoritative shot sequence so temporary visuals cannot outlive barrier collisions; simulate shared swept arena rebounds per volley member so even short-lived beams visibly match authority before correction snapshots arrive.
 - Keep connection and lobby views separate from the arena; require authoritative ready-up from every human, and allow only the lobby leader to eject other waiting humans.
-- Provide server options: `--server`, `--port=7000`, `--server-name=Super Star Fighter Server`, `--max-players=32`, `--rounds-to-win=3`, and a test-only `--auto-start`.
+- Provide server options: `--server`, `--port=7000`, `--server-name=Edgegap Arena Shooter Server`, `--max-players=32`, `--rounds-to-win=3`, and a test-only `--auto-start`.
 - Clients connect through an IP/hostname and TCP port. The first connected player becomes lobby leader; leadership transfers to the earliest remaining player on disconnect.
 - The client also provides Host & Join through an isolated in-process authority, plus bounded UDP local-subnet discovery and a one-click LAN server browser. Direct IP/hostname remains the routed-LAN and internet fallback.
 - NPCs consume match participant seats but no client transport connections. Their movement, full-arena non-ally target acquisition, objective pursuit, close-contact recovery, firing, shielding, and draft choices run exclusively on the authoritative server through the same validated combat-input and card systems used for humans. Obstacle navigation tracks persistent blocked engagements and escalates a hold/flank pair into an opposite-side breakout before overtime can become the only source of progress.
