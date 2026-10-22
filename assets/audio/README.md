@@ -1,6 +1,6 @@
 # Audio drop-in contract
 
-Super Star Fighter runs safely without external audio files. When files are absent, menu/gameplay music is silent, victory music has a generated fallback, and combat uses synthesized placeholder effects generated at runtime.
+Edgegap Arena Shooter runs safely without external audio files. When files are absent, menu/gameplay music is silent, victory music has a generated fallback, and combat uses synthesized placeholder effects generated at runtime.
 
 Add music files at these paths:
 
@@ -43,4 +43,4 @@ Music discovery retains file paths until a context needs its track. Interactive 
 
 The 24-voice effects pool limits remote gunfire to eight concurrent voices and other remote effects to six. Local hull/shield feedback and objective alerts take priority. World effects use restrained stereo panning; critical cues briefly duck music by 7 dB. The master limiter reserves a 1 dB output ceiling.
 
-Run `./tools/verify-audio.ps1 -BaselineRevision 08fffb9` to collect paired process-memory probes and actual Godot mix-bus WAV recordings. Run `python tools/analyze-audio.py reports/audio-verification --package builds/beta-10/SuperStarFighter-Beta10.exe` for sample peak, RMS, stereo and local package measurements. The package argument inspects an existing export; it does not produce a new build. Recorded auditions still require headphone/speaker listening review.
+Run `./tools/verify-audio.ps1 -BaselineRevision 08fffb9` to collect paired process-memory probes and actual Godot mix-bus WAV recordings. Run `python tools/analyze-audio.py reports/audio-verification --package builds/beta-10/EdgegapArenaShooter-Beta10.exe` for sample peak, RMS, stereo and local package measurements. The package argument inspects an existing export; it does not produce a new build. Recorded auditions still require headphone/speaker listening review.

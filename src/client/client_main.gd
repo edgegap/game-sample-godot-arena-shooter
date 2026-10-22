@@ -579,7 +579,7 @@ func _create_credits_overlay() -> void:
 	content.add_theme_constant_override("separation", 12)
 	panel.add_child(content)
 	var kicker := Label.new()
-	kicker.text = "✦  DUMPSTER FIRE LABS PRESENTS  ✦"
+	kicker.text = "✦  ORIGINAL GAME BY DUMPSTER FIRE LABS  ✦"
 	kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	kicker.theme_type_variation = &"Kicker"
 	content.add_child(kicker)

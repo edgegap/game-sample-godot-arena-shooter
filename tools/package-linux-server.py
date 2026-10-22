@@ -14,7 +14,7 @@ root = Path(__file__).resolve().parents[1]
 arch = sys.argv[1]
 assert arch in ("x86_64", "arm64")
 build = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else root / f"{release['directory']}/server-linux-{arch}"
-binary = build / f"SuperStarFighter-Server.{arch}"
+binary = build / f"EdgegapArenaShooter-Server.{arch}"
 data = binary.read_bytes()
 assert data[:6] == b"\x7fELF\x02\x01"
 assert struct.unpack_from("<H", data, 18)[0] == (62 if arch == "x86_64" else 183)
@@ -26,7 +26,7 @@ files["LICENSE.txt"] = root / "LICENSE"
 for name in ("start-server.sh", "admin.py"):
     files[name] = root / "tools" / name
 label = "x64" if arch == "x86_64" else "arm64"
-base = build / f"SuperStarFighter-{release['tag']}-Server-Linux-{label}"
+base = build / f"EdgegapArenaShooter-{release['tag']}-Server-Linux-{label}"
 for name, source in files.items():
     if name == "SERVER_README.txt":
         # Verify the archives against the rendered copy, not the placeholder source.

@@ -36,8 +36,8 @@ class ReleaseMetadataTests(unittest.TestCase):
 
     def test_documents_render_release_placeholders(self):
         release = load_release()
-        text = render("{{LABEL}} {{VERSION}} SuperStarFighter-{{TAG}} protocol {{PROTOCOL}}/{{PACKET}}", release)
-        self.assertEqual(text, f"{release['label']} {release['version']} SuperStarFighter-{release['tag']} "
+        text = render("{{LABEL}} {{VERSION}} EdgegapArenaShooter-{{TAG}} protocol {{PROTOCOL}}/{{PACKET}}", release)
+        self.assertEqual(text, f"{release['label']} {release['version']} EdgegapArenaShooter-{release['tag']} "
                                f"protocol {release['protocol_version']}/{release['packet_version']}")
         with self.assertRaises(ValueError):
             render("{{UNKNOWN}}", release)

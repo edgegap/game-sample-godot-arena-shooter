@@ -21,8 +21,8 @@ $godot = if ($GodotExecutable) { (Resolve-Path -LiteralPath $GodotExecutable).Pa
 $outputRoot = Join-Path $SsfToolsRoot ('package-acceptance/' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmss') + '-' + [Guid]::NewGuid().ToString('N').Substring(0, 8))
 Assert-SsfPathWithinTools -Path $outputRoot
 New-Item -ItemType Directory -Path $outputRoot -Force | Out-Null
-$serverPath = Join-Path $outputRoot 'SSF-server.exe'
-$clientPath = Join-Path $outputRoot 'SSF-client.exe'
+$serverPath = Join-Path $outputRoot 'arena-shooter-server.exe'
+$clientPath = Join-Path $outputRoot 'arena-shooter-client.exe'
 $importText = (& $godot --headless --path $SsfRepositoryRoot --log-file (Join-Path $outputRoot 'import.log') --editor --quit 2>&1 | Out-String)
 Assert-SsfGodotResult -Output $importText -ExitCode $LASTEXITCODE -Name 'Package resource import'
 

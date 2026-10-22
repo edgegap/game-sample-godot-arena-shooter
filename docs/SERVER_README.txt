@@ -1,4 +1,4 @@
-Super Star Fighter - Dedicated Server (Windows x64 / Linux x64 / Linux ARM64, {{LABEL}})
+Edgegap Arena Shooter - Dedicated Server (Windows x64 / Linux x64 / Linux ARM64, {{LABEL}})
 
 WINDOWS QUICK START
 
@@ -224,10 +224,10 @@ acceptance still need to be performed on your deployment host.
 
 Extract the matching archive into a writable folder, then cd into that folder:
 
-  tar -xzf SuperStarFighter-{{TAG}}-Server-Linux-x64.tar.gz
-  chmod +x start-server.sh SuperStarFighter-Server.x86_64
+  tar -xzf EdgegapArenaShooter-{{TAG}}-Server-Linux-x64.tar.gz
+  chmod +x start-server.sh EdgegapArenaShooter-Server.x86_64
 
-For ARM64 use the arm64 archive and SuperStarFighter-Server.arm64 instead.
+For ARM64 use the arm64 archive and EdgegapArenaShooter-Server.arm64 instead.
 ZIP alternatives contain the same files; run chmod if your extractor drops
 executable permissions. Launch scripts use /bin/sh and have Unix line endings.
 
@@ -284,25 +284,25 @@ stop the process without the same application-level shutdown sequence.
 
 OPTIONAL SYSTEMD SERVICE
 
-For systemd hosts, an operator can install into /opt/ssf-beta12 and create a
-dedicated unprivileged account named ssf. Give that account read/execute access
-to the package and private read access to secrets. Create /var/lib/ssf owned
-by ssf for writable state. Adjust every path/account before installing this
-example as /etc/systemd/system/ssf.service:
+For systemd hosts, an operator can install into /opt/arena-shooter-beta12 and create a
+dedicated unprivileged account named arena-shooter. Give that account read/execute access
+to the package and private read access to secrets. Create /var/lib/arena-shooter owned
+by arena-shooter for writable state. Adjust every path/account before installing this
+example as /etc/systemd/system/arena-shooter.service:
 
   [Unit]
-  Description=Super Star Fighter dedicated server
+  Description=Edgegap Arena Shooter dedicated server
   After=network.target
 
   [Service]
   Type=simple
-  User=ssf
-  Group=ssf
-  WorkingDirectory=/var/lib/ssf
-  Environment=HOME=/var/lib/ssf
+  User=arena-shooter
+  Group=arena-shooter
+  WorkingDirectory=/var/lib/arena-shooter
+  Environment=HOME=/var/lib/arena-shooter
   UMask=0077
-  ExecStart=/opt/ssf-beta12/start-server.sh --port=7777 --admin-port=7778 --password-file=/var/lib/ssf/secrets/lobby.txt --admin-password-file=/var/lib/ssf/secrets/admin.txt --ban-file=/var/lib/ssf/server-bans.json --max-players=32
-  ExecStop=/usr/bin/python3 /opt/ssf-beta12/admin.py shutdown --port 7778 --admin-password-file /var/lib/ssf/secrets/admin.txt --non-interactive
+  ExecStart=/opt/arena-shooter-beta12/start-server.sh --port=7777 --admin-port=7778 --password-file=/var/lib/arena-shooter/secrets/lobby.txt --admin-password-file=/var/lib/arena-shooter/secrets/admin.txt --ban-file=/var/lib/arena-shooter/server-bans.json --max-players=32
+  ExecStop=/usr/bin/python3 /opt/arena-shooter-beta12/admin.py shutdown --port 7778 --admin-password-file /var/lib/arena-shooter/secrets/admin.txt --non-interactive
   Restart=on-failure
   RestartSec=5
   TimeoutStopSec=20
@@ -315,10 +315,10 @@ example as /etc/systemd/system/ssf.service:
 After checking the paths and testing manual startup as the service account:
 
   sudo systemctl daemon-reload
-  sudo systemctl enable --now ssf
-  sudo systemctl status ssf
-  sudo journalctl -u ssf -f
-  sudo systemctl stop ssf
+  sudo systemctl enable --now arena-shooter
+  sudo systemctl status arena-shooter
+  sudo journalctl -u arena-shooter -f
+  sudo systemctl stop arena-shooter
 
 ExecStop requests authenticated graceful shutdown; systemd may terminate the
 process if that fails or exceeds the timeout. Confirm the graceful marker in

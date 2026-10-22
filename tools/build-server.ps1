@@ -6,7 +6,7 @@ $ErrorActionPreference = 'Stop'
 Assert-SsfShippingPolicy
 $godot = Get-SsfGodotExecutable
 $buildRoot = Join-Path $SsfRepositoryRoot "$($SsfRelease.directory)/server"
-$serverPath = Join-Path $buildRoot 'SuperStarFighter-Server.exe'
+$serverPath = Join-Path $buildRoot 'EdgegapArenaShooter-Server.exe'
 $logPath = Join-Path $buildRoot 'server-smoke.log'
 New-Item -ItemType Directory -Path $buildRoot -Force | Out-Null
 
@@ -45,5 +45,5 @@ foreach ($name in @('start-server.ps1', 'admin.ps1')) {
 & (Join-Path $PSScriptRoot 'verify-server-operations.ps1') -ServerExecutable $serverPath
 if ($LASTEXITCODE -ne 0) { throw 'Dedicated server operations verification failed.' }
 $files = @($serverPath) + @('THIRD_PARTY_NOTICES.txt', 'GODOT_COPYRIGHT.txt', 'SERVER_README.txt', 'LICENSE.txt', 'start-server.ps1', 'admin.ps1' | ForEach-Object { Join-Path $buildRoot $_ })
-Compress-Archive -LiteralPath $files -DestinationPath (Join-Path $buildRoot "SuperStarFighter-$($SsfRelease.tag)-Server-Windows-x64.zip") -Force
+Compress-Archive -LiteralPath $files -DestinationPath (Join-Path $buildRoot "EdgegapArenaShooter-$($SsfRelease.tag)-Server-Windows-x64.zip") -Force
 Write-Host "Dedicated server export, resource audit and isolated startup passed: $serverPath"

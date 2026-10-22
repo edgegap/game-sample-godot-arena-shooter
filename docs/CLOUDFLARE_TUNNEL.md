@@ -17,8 +17,8 @@ Both need Beta 17 or later, with every client running the same beta as the serve
 
 - Ubuntu 22.04 or 24.04, x86_64 or arm64, with outbound internet access and `sudo`.
 - The matching server package from `builds/beta-NN/`:
-  - x86_64: `server-linux-x86_64/SuperStarFighter-BetaNN-Server-Linux-x64.tar.gz`
-  - arm64: `server-linux-arm64/SuperStarFighter-BetaNN-Server-Linux-arm64.tar.gz`
+  - x86_64: `server-linux-x86_64/EdgegapArenaShooter-BetaNN-Server-Linux-x64.tar.gz`
+  - arm64: `server-linux-arm64/EdgegapArenaShooter-BetaNN-Server-Linux-arm64.tar.gz`
 - Python 3 for the admin tool (preinstalled on Ubuntu).
 - Part B only: a domain whose DNS is managed by Cloudflare (a free account is enough).
 
@@ -27,7 +27,7 @@ Check the architecture with `uname -m` (`x86_64` or `aarch64`).
 Copy the package to the host, for example:
 
 ```bash
-scp SuperStarFighter-BetaNN-Server-Linux-x64.tar.gz you@your-vps:~
+scp EdgegapArenaShooter-BetaNN-Server-Linux-x64.tar.gz you@your-vps:~
 ```
 
 ## Install cloudflared (both parts)
@@ -46,9 +46,9 @@ cloudflared --version
 1. Unpack the server into a folder. The archive has no top-level folder of its own.
 
    ```bash
-   mkdir -p ~/ssf && cd ~/ssf
-   tar -xzf ~/SuperStarFighter-BetaNN-Server-Linux-x64.tar.gz
-   chmod +x start-server.sh SuperStarFighter-Server.*
+   mkdir -p ~/arena-shooter && cd ~/arena-shooter
+   tar -xzf ~/EdgegapArenaShooter-BetaNN-Server-Linux-x64.tar.gz
+   chmod +x start-server.sh EdgegapArenaShooter-Server.*
    ```
 
 2. Start the server listening only on loopback, in proxy mode. The password prompt keeps it out of shell history and the process list.
@@ -80,52 +80,52 @@ Notes:
 
 ## Part B — Permanent tunnel
 
-### B1. Install the server under /var/opt/ssf
+### B1. Install the server under /var/opt/arena-shooter
 
-Program files stay owned by root; the `ssf` service account can only write to `state/`.
+Program files stay owned by root; the `arena-shooter` service account can only write to `state/`.
 
 ```text
-/var/opt/ssf/          root:root  755   server package (binary, start-server.sh, admin.py, docs)
-/var/opt/ssf/state/    ssf:ssf    700   service HOME: Godot user data and engine logs, ban list
+/var/opt/arena-shooter/          root:root  755   server package (binary, start-server.sh, admin.py, docs)
+/var/opt/arena-shooter/state/    arena-shooter:arena-shooter    700   service HOME: Godot user data and engine logs, ban list
 ```
 
 ```bash
-sudo useradd --system --no-create-home --home-dir /var/opt/ssf/state --shell /usr/sbin/nologin ssf
-sudo mkdir -p /var/opt/ssf/state
-sudo tar -xzf ~/SuperStarFighter-BetaNN-Server-Linux-x64.tar.gz -C /var/opt/ssf
-sudo chown root:root /var/opt/ssf && sudo chmod 755 /var/opt/ssf
-sudo chmod 755 /var/opt/ssf/start-server.sh /var/opt/ssf/SuperStarFighter-Server.*
-sudo chown ssf:ssf /var/opt/ssf/state && sudo chmod 700 /var/opt/ssf/state
+sudo useradd --system --no-create-home --home-dir /var/opt/arena-shooter/state --shell /usr/sbin/nologin arena-shooter
+sudo mkdir -p /var/opt/arena-shooter/state
+sudo tar -xzf ~/EdgegapArenaShooter-BetaNN-Server-Linux-x64.tar.gz -C /var/opt/arena-shooter
+sudo chown root:root /var/opt/arena-shooter && sudo chmod 755 /var/opt/arena-shooter
+sudo chmod 755 /var/opt/arena-shooter/start-server.sh /var/opt/arena-shooter/EdgegapArenaShooter-Server.*
+sudo chown arena-shooter:arena-shooter /var/opt/arena-shooter/state && sudo chmod 700 /var/opt/arena-shooter/state
 ```
 
 `state/` must exist before the service starts; systemd refuses to start (`status=226/NAMESPACE`) if a `ReadWritePaths=` directory is missing.
 
 ### B2. Create the game server service
 
-Create `/etc/systemd/system/ssf.service` with `sudo nano /etc/systemd/system/ssf.service`:
+Create `/etc/systemd/system/arena-shooter.service` with `sudo nano /etc/systemd/system/arena-shooter.service`:
 
 ```ini
 [Unit]
-Description=Super Star Fighter dedicated server
+Description=Edgegap Arena Shooter dedicated server
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-User=ssf
-Group=ssf
-WorkingDirectory=/var/opt/ssf/state
-Environment=HOME=/var/opt/ssf/state
+User=arena-shooter
+Group=arena-shooter
+WorkingDirectory=/var/opt/arena-shooter/state
+Environment=HOME=/var/opt/arena-shooter/state
 Environment="SSF_LOBBY_PASSWORD=change-me-lobby"
 Environment="SSF_ADMIN_PASSWORD=change-me-admin-12+"
 UMask=0077
-ExecStart=/var/opt/ssf/start-server.sh --port=7000 --bind=127.0.0.1 --behind-proxy --admin-port=7778 --ban-file=/var/opt/ssf/state/server-bans.json --server-name="Friday Fight Night" --max-players=32
-ExecStop=/usr/bin/python3 /var/opt/ssf/admin.py shutdown --port 7778 --non-interactive
+ExecStart=/var/opt/arena-shooter/start-server.sh --port=7000 --bind=127.0.0.1 --behind-proxy --admin-port=7778 --ban-file=/var/opt/arena-shooter/state/server-bans.json --server-name="Friday Fight Night" --max-players=32
+ExecStop=/usr/bin/python3 /var/opt/arena-shooter/admin.py shutdown --port 7778 --non-interactive
 Restart=on-failure
 RestartSec=5
 TimeoutStopSec=20
 NoNewPrivileges=true
 ProtectSystem=strict
-ReadWritePaths=/var/opt/ssf/state
+ReadWritePaths=/var/opt/arena-shooter/state
 PrivateTmp=true
 
 [Install]
@@ -141,10 +141,10 @@ Password rules:
 Lock the file (it contains the passwords), then start the server:
 
 ```bash
-sudo chmod 600 /etc/systemd/system/ssf.service
+sudo chmod 600 /etc/systemd/system/arena-shooter.service
 sudo systemctl daemon-reload
-sudo systemctl enable --now ssf
-sudo journalctl -u ssf -f          # expect SSF_MODE_READY=server port=7000
+sudo systemctl enable --now arena-shooter
+sudo journalctl -u arena-shooter -f          # expect SSF_MODE_READY=server port=7000
 ```
 
 Anyone with `sudo` can read the passwords in the unit file, and some systemd versions show `Environment=` values to local users through `systemctl show`. That is fine on a machine only you log into; on a shared machine, move the two `Environment=` lines into a root-only `EnvironmentFile=`.
@@ -153,7 +153,7 @@ Anyone with `sudo` can read the passwords in the unit file, and some systemd ver
 
 **Option 1 — Cloudflare dashboard (simplest):**
 
-1. Open **Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared** and name it `ssf`.
+1. Open **Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared** and name it `arena-shooter`.
 2. Copy the displayed command and run it on the host. It installs `cloudflared` as a service that starts at boot:
 
    ```bash
@@ -166,8 +166,8 @@ Anyone with `sudo` can read the passwords in the unit file, and some systemd ver
 
 ```bash
 cloudflared tunnel login                       # opens a browser link to authorise your domain
-cloudflared tunnel create ssf                  # prints the tunnel ID and writes ~/.cloudflared/<tunnel-id>.json
-cloudflared tunnel route dns ssf game.example.com
+cloudflared tunnel create arena-shooter                  # prints the tunnel ID and writes ~/.cloudflared/<tunnel-id>.json
+cloudflared tunnel route dns arena-shooter game.example.com
 sudo mkdir -p /etc/cloudflared
 sudo cp ~/.cloudflared/<tunnel-id>.json /etc/cloudflared/
 sudo chmod 600 /etc/cloudflared/<tunnel-id>.json
@@ -176,7 +176,7 @@ sudo chmod 600 /etc/cloudflared/<tunnel-id>.json
 Create `/etc/cloudflared/config.yml`:
 
 ```yaml
-tunnel: ssf
+tunnel: arena-shooter
 credentials-file: /etc/cloudflared/<tunnel-id>.json
 region: us                  # optional: keep the tunnel on US data centres
 ingress:
@@ -200,7 +200,7 @@ sudo journalctl -u cloudflared -f      # expect "Registered tunnel connection"
 
 Players choose **Direct Connect** and enter `wss://game.example.com` and the lobby password.
 
-After a reboot both `ssf` and `cloudflared` start on their own. Start order does not matter; if the tunnel is up first, joins fail briefly until the game server is ready.
+After a reboot both `arena-shooter` and `cloudflared` start on their own. Start order does not matter; if the tunnel is up first, joins fail briefly until the game server is ready.
 
 To keep a dashboard-created tunnel on US data centres, run `sudo systemctl edit --full cloudflared`, add `--region us` to its `ExecStart=` line, and `sudo systemctl restart cloudflared`. This affects only your host's side of the tunnel; each player always enters Cloudflare at their nearest data centre.
 
@@ -227,22 +227,22 @@ Blocked or challenged connections appear under **Security → Events** with the 
 The admin tool prompts for the admin password without echoing it:
 
 ```bash
-python3 /var/opt/ssf/admin.py status  --port 7778
-python3 /var/opt/ssf/admin.py players --port 7778
-python3 /var/opt/ssf/admin.py kick    --port 7778 --peer-id 42
+python3 /var/opt/arena-shooter/admin.py status  --port 7778
+python3 /var/opt/arena-shooter/admin.py players --port 7778
+python3 /var/opt/arena-shooter/admin.py kick    --port 7778 --peer-id 42
 ```
 
 `ban` and `block` are refused in proxy mode. In-game admin also works through the tunnel: open **Admin** in the lobby and enter the admin password. Never add port 7778 to the tunnel; it is loopback-only by design.
 
-Logs: `sudo journalctl -u ssf -f` for the game server, `sudo journalctl -u cloudflared -f` for the tunnel.
+Logs: `sudo journalctl -u arena-shooter -f` for the game server, `sudo journalctl -u cloudflared -f` for the tunnel.
 
 ## Upgrading
 
 ```bash
-sudo systemctl stop ssf
-sudo tar -xzf ~/SuperStarFighter-BetaNN-Server-Linux-x64.tar.gz -C /var/opt/ssf
-sudo chmod 755 /var/opt/ssf/start-server.sh /var/opt/ssf/SuperStarFighter-Server.*
-sudo systemctl start ssf
+sudo systemctl stop arena-shooter
+sudo tar -xzf ~/EdgegapArenaShooter-BetaNN-Server-Linux-x64.tar.gz -C /var/opt/arena-shooter
+sudo chmod 755 /var/opt/arena-shooter/start-server.sh /var/opt/arena-shooter/EdgegapArenaShooter-Server.*
+sudo systemctl start arena-shooter
 ```
 
 `state/` and the service file are not part of the package and are left unchanged. Clients and server must run the same version.
@@ -251,10 +251,10 @@ sudo systemctl start ssf
 
 | Symptom | Cause and fix |
 | --- | --- |
-| `status=226/NAMESPACE` and "Failed to set up mount namespacing: …/state" | `/var/opt/ssf/state` is missing. Create it (B1), then `sudo systemctl reset-failed ssf && sudo systemctl start ssf`. |
+| `status=226/NAMESPACE` and "Failed to set up mount namespacing: …/state" | `/var/opt/arena-shooter/state` is missing. Create it (B1), then `sudo systemctl reset-failed arena-shooter && sudo systemctl start arena-shooter`. |
 | `Set --admin-password-file or SSF_ADMIN_PASSWORD to 12–64 printable characters…` | The admin password is shorter than 12 characters, or the `SSF_ADMIN_PASSWORD` line is missing. Fix the unit, `daemon-reload`, restart. |
 | `The admin password must differ from the lobby password.` | Use two different passwords. |
-| Client says it cannot reach the server | Check `systemctl status ssf cloudflared`, that the address starts with `wss://`, and that the public hostname points at `HTTP 127.0.0.1:7000`. |
+| Client says it cannot reach the server | Check `systemctl status arena-shooter cloudflared`, that the address starts with `wss://`, and that the public hostname points at `HTTP 127.0.0.1:7000`. |
 | Client connects then is rejected with a version mismatch | Client and server versions differ; update both. |
 | Players connect from some networks but not others | Check **Security → Events** and the settings above. |
 | Temporary tunnel refuses to start | Rename `~/.cloudflared/config.yml` while using `cloudflared tunnel --url`. |
