@@ -10,7 +10,7 @@ The game's server already runs the whole simulation, so nothing about the netcod
 | `src/client/edgegap/edgegap_find_match.gd` | The FIND MATCH tab: matchmaker tickets, then join through Direct Connect |
 | `src/client/edgegap/edgegap_settings.gd` | Matchmaker URL, Auth Token, profile and port name |
 | `edgegap/Dockerfile` | Server image from the Linux x86_64 dedicated-server package |
-| `edgegap/matchmaker-config.json` | Matchmaker config: one `casual` profile, 2 to 4 players, solo after 30 s |
+| `edgegap/matchmaker-config.json` | Matchmaker config: one `casual` profile, 2 to 4 players, solo after 20 s, tickets expire after 30 s |
 | `src/bootstrap.gd`, `src/server/server_main.gd`, `src/client/ui/connection_controller.gd` | One line each to call the above |
 
 Outside an Edgegap deployment (no `ARBITRIUM_REQUEST_ID`) the server behaves exactly like upstream.
@@ -23,7 +23,7 @@ Outside an Edgegap deployment (no `ARBITRIUM_REQUEST_ID`) the server behaves exa
 4. The server starts the match when every matched player is in, or 30 s after the first one joined. NPCs fill the empty seats up to 4 ships, so a solo player still gets a game.
 5. After the final results, the server waits 20 s and calls `ARBITRIUM_DELETE_URL` to stop its deployment. It also stops if nobody joins within 120 s, or if everyone leaves for 30 s. One match per deployment: a rematch request still ends it, and players queue again.
 
-**Playing alone:** a player who queues alone is not left waiting. The `casual` profile first looks for 2 to 4 players; after 30 s its expansion lowers the minimum to 1, so the lone ticket is matched on its own. The matchmaker deploys a server with one ticket in `MM_TICKET_IDS`, the server starts the match as soon as that player joins (every matched player is in, so the 30 s start grace doesn't apply), and NPCs fill the other 3 seats up to 4 ships.
+**Playing alone:** a player who queues alone is not left waiting. The `casual` profile first looks for 2 to 4 players; after 20 s its expansion lowers the minimum to 1, so the lone ticket is matched on its own before its 30 s `ticket_expiration_period`. The matchmaker deploys a server with one ticket in `MM_TICKET_IDS`, the server starts the match as soon as that player joins (every matched player is in, so the 30 s start grace doesn't apply), and NPCs fill the other 3 seats up to 4 ships.
 
 Server env vars (optional, on the app version): `EDGEGAP_NPC_FILL` (default 4, 0 turns NPCs off), `EDGEGAP_START_GRACE` (30), `EDGEGAP_JOIN_TIMEOUT` (120), `EDGEGAP_ROUNDS_TO_WIN` (3). Server log lines start with `EDGEGAP`.
 
