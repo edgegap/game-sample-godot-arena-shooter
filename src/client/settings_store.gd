@@ -1,7 +1,7 @@
 extends RefCounted
 
 ## Shared persistence boundary for all client preferences.
-const PATH: String = "user://super_star_fighter_settings.cfg"
+const PATH: String = "user://edgegap_arena_shooter_settings.cfg"
 
 
 static func update(changes: Callable, path: String = PATH) -> Error:

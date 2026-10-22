@@ -370,7 +370,7 @@ def windows_version_present(data, version):
 
 
 def build_windows(godot, release, output):
-    client = output / f"SuperStarFighter-{release['tag']}.exe"
+    client = output / f"EdgegapArenaShooter-{release['tag']}.exe"
     export(godot, "Windows Client", client)
     audit(client, output / "client-package-audit.json")
     if not windows_version_present(client.read_bytes(), release["platform_version"]):
@@ -380,14 +380,14 @@ def build_windows(godot, release, output):
         smoke_client(client, output / "beta-smoke.log")
     else:
         print("SKIP Launch smoke: requires a Windows x64 host.")
-    archive = output / f"SuperStarFighter-{release['tag']}-Windows-x64.zip"
+    archive = output / f"EdgegapArenaShooter-{release['tag']}-Windows-x64.zip"
     write_zip(archive, [(client.name, client, True), *client_documents(release, output)])
     return [archive]
 
 
 def build_linux(godot, release, output, arch):
     arm = arch == "arm64"
-    client = output / f"SuperStarFighter-{release['tag']}.{arch}"
+    client = output / f"EdgegapArenaShooter-{release['tag']}.{arch}"
     export(godot, f"Linux {'ARM64 ' if arm else ''}Client", client)
     audit(client, output / f"linux-{arch}-package-audit.json")
     data = client.read_bytes()
@@ -400,7 +400,7 @@ def build_linux(godot, release, output, arch):
         smoke_client(client, output / f"linux-{arch}-smoke.log")
     else:
         print(f"SKIP Launch smoke: requires a Linux {arch} host with a display.")
-    archive = output / f"SuperStarFighter-{release['tag']}-Linux-{'arm64' if arm else 'x64'}.zip"
+    archive = output / f"EdgegapArenaShooter-{release['tag']}-Linux-{'arm64' if arm else 'x64'}.zip"
     write_zip(archive, [(client.name, client, True), *client_documents(release, output, linux=True)])
     return [archive]
 
@@ -416,7 +416,7 @@ def entry_contains(bundle, entry, text):
 
 
 def build_macos(godot, release, output):
-    archive = output / f"SuperStarFighter-{release['tag']}-macOS-universal.zip"
+    archive = output / f"EdgegapArenaShooter-{release['tag']}-macOS-universal.zip"
     export(godot, "macOS Client", archive)
     with zipfile.ZipFile(archive) as bundle:
         entries = bundle.infolist()
@@ -437,7 +437,7 @@ def build_macos(godot, release, output):
         if not {0x01000007, 0x0100000C} <= cpus:
             raise GateError("macOS app executable does not contain both x86_64 and arm64 slices.")
         plist_text = bundle.read(plist).decode("utf-8", "replace")
-        if "com.dumpsterfirelabs.superstarfighter" not in plist_text or release["platform_version"] not in plist_text:
+        if "com.edgegap.arenashooter" not in plist_text or release["platform_version"] not in plist_text:
             raise GateError("macOS Info.plist does not contain the expected bundle identifier and version.")
         if not any(re.search(r"\.app/Contents/(MacOS|Resources)/", e.filename) and entry_contains(bundle, e, release["version"])
                    for e in entries):
@@ -462,7 +462,7 @@ def build_macos(godot, release, output):
 
 def build_windows_server(godot, release, output):
     folder = output / "server"
-    server = folder / "SuperStarFighter-Server.exe"
+    server = folder / "EdgegapArenaShooter-Server.exe"
     export(godot, "Windows Dedicated Server", server)
     audit(server, folder / "package-audit.json", server=True)
     payload = [(ROOT / "docs" / name, name) for name in ("THIRD_PARTY_NOTICES.txt", "GODOT_COPYRIGHT.txt", "SERVER_README.txt")]
@@ -484,14 +484,14 @@ def build_windows_server(godot, release, output):
             print("SKIP Launcher/admin operations check: requires PowerShell to run the packaged .ps1 tools.")
     else:
         print("SKIP Server smoke: requires a Windows x64 host.")
-    archive = folder / f"SuperStarFighter-{release['tag']}-Server-Windows-x64.zip"
+    archive = folder / f"EdgegapArenaShooter-{release['tag']}-Server-Windows-x64.zip"
     write_zip(archive, [(server.name, server, True), *[(name, folder / name, False) for _, name in payload]])
     return [archive]
 
 
 def build_linux_server(godot, release, output, arch):
     folder = output / f"server-linux-{arch}"
-    server = folder / f"SuperStarFighter-Server.{arch}"
+    server = folder / f"EdgegapArenaShooter-Server.{arch}"
     export(godot, f"Linux {arch} Dedicated Server", server)
     audit(server, folder / "package-audit.json", server=True)
     if can_run("Linux", arch):
@@ -500,7 +500,7 @@ def build_linux_server(godot, release, output, arch):
         print(f"SKIP Server smoke: requires a Linux {arch} host.")
     python_tool(TOOLS / "package-linux-server.py", arch, folder)
     label = "x64" if arch == "x86_64" else "arm64"
-    return [folder / f"SuperStarFighter-{release['tag']}-Server-Linux-{label}{suffix}" for suffix in (".tar.gz", ".zip")]
+    return [folder / f"EdgegapArenaShooter-{release['tag']}-Server-Linux-{label}{suffix}" for suffix in (".tar.gz", ".zip")]
 
 
 TARGETS = {

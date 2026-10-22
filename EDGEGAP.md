@@ -23,7 +23,15 @@ Outside an Edgegap deployment (no `ARBITRIUM_REQUEST_ID`) the server behaves exa
 4. The server starts the match when every matched player is in, or 30 s after the first one joined. NPCs fill the empty seats up to 4 ships, so a solo player still gets a game.
 5. After the final results, the server waits 20 s and calls `ARBITRIUM_DELETE_URL` to stop its deployment. It also stops if nobody joins within 120 s, or if everyone leaves for 30 s. One match per deployment: a rematch request still ends it, and players queue again.
 
+**Playing alone:** a player who queues alone is not left waiting. The `casual` profile first looks for 2 to 4 players; after 30 s its expansion lowers the minimum to 1, so the lone ticket is matched on its own. The matchmaker deploys a server with one ticket in `MM_TICKET_IDS`, the server starts the match as soon as that player joins (every matched player is in, so the 30 s start grace doesn't apply), and NPCs fill the other 3 seats up to 4 ships.
+
 Server env vars (optional, on the app version): `EDGEGAP_NPC_FILL` (default 4, 0 turns NPCs off), `EDGEGAP_START_GRACE` (30), `EDGEGAP_JOIN_TIMEOUT` (120), `EDGEGAP_ROUNDS_TO_WIN` (3). Server log lines start with `EDGEGAP`.
+
+**Known limitation:** the server does not check that a connecting player holds a matchmaker ticket for this match, so anyone who learns the server address can join. The lobby password is the deployment's request ID, which is part of that address, and `MM_TICKET_IDS` is only used to count players. Deployments stop themselves when no one joins or everyone leaves, which limits cost. Before production, validate each player against the match's tickets (`MM_TICKET_IDS` / the matchmaker API) or an auth token.
+
+## Playing more than 4 ships
+
+This sample was tested on Edgegap with up to 4 ships. The game supports up to 32 pilots (`GameConstants.MAX_PLAYERS`); the Edgegap server sizes the lobby to the larger of the matched player count and `EDGEGAP_NPC_FILL`. To go bigger, raise `max_team_size` in `edgegap/matchmaker-config.json` for more players and `EDGEGAP_NPC_FILL` for more NPCs, and give the app version more vCPU than the shipped 0.5 vCPU / 1 GB. A 32-pilot match should run that way, but it was not tested on Edgegap.
 
 ## Build and deploy
 
@@ -51,4 +59,5 @@ Client: `python tools/build.py build windows --skip-gate`. `EDGEGAP_FIND_MATCH=1
 ## Changes from upstream
 
 - Renamed to Edgegap Arena Shooter, and the music and studio logo removed: the upstream [asset license](assets/LICENSE.md) reserves them, and the game's name, for unmodified builds. Sound effects are synthesized in code and still play.
-- The update checker points at this fork's releases.
+- Binaries, packages, the macOS bundle ID (`com.edgegap.arenashooter`) and the settings file (`edgegap_arena_shooter_settings.cfg`) use the new name.
+- The update checker asks the GitHub API for this fork's latest release (this fork has published none yet, so it finds nothing), but release links still open the upstream releases page.

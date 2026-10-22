@@ -7,7 +7,7 @@ case "$(uname -m)" in
     aarch64|arm64) server_arch=arm64 ;;
     *) echo 'Unsupported architecture: requires Linux x64 or ARM64.' >&2; exit 1 ;;
 esac
-server_binary="$server_dir/SuperStarFighter-Server.$server_arch"
+server_binary="$server_dir/EdgegapArenaShooter-Server.$server_arch"
 if [ ! -x "$server_binary" ]; then
     echo "Missing executable: $server_binary (check package architecture and chmod +x)." >&2
     exit 1

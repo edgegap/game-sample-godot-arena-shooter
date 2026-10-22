@@ -2,9 +2,11 @@
 
 # Edgegap Arena Shooter
 
-A fork of [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFighter) by Dumpster Fire Labs. The upstream documentation below still uses the original name.
+A fork of [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFighter) by Dumpster Fire Labs (MIT). The upstream licence does not let derivative works use the original game's name or the studio's name, so this fork has its own name; the documentation below is upstream's, adapted to the new name. See [License and Assets](#license-and-assets).
 
-Super Star Fighter is a top-down multiplayer arena shooter for up to 32 pilots. Every round you draft a new upgrade card, the cards stack without limit, and a sensible little starter ship slowly becomes a screen-filling mechanical disaster. Then you take it into the arena against your friends.
+Edgegap Arena Shooter is a top-down multiplayer arena shooter for up to 32 pilots. Every round you draft a new upgrade card, the cards stack without limit, and a sensible little starter ship slowly becomes a screen-filling mechanical disaster. Then you take it into the arena against your friends.
+
+> **On Edgegap, this sample was tested with up to 4 ships.** The shipped matchmaker config groups 2 to 4 players, and the server fills the match with NPCs up to 4 ships (`EDGEGAP_NPC_FILL`, default 4). The game itself supports up to 32 pilots, and a 32-pilot match should run on Edgegap if you raise the app version's vCPU (the shipped version uses 0.5 vCPU / 1 GB), the matchmaker's `max_team_size` (more players) and `EDGEGAP_NPC_FILL` (more NPCs). 32 pilots on Edgegap were not tested. See [EDGEGAP.md](EDGEGAP.md#playing-more-than-4-ships).
 
 **[Download the latest release](https://github.com/DumpsterFireLabs/SuperStarFighter/releases/latest)** for Windows, Linux (x64 and ARM64), or macOS, plus dedicated servers.
 
@@ -134,7 +136,7 @@ Finally, cross-build the universal macOS client for Apple Silicon and Intel Macs
 
 The Windows script runs the complete foundation gate, exports a single embedded-PCK executable, launches it through its normal rendered startup path, verifies the packaged music inventory, and creates the versioned friend ZIP. The Linux script validates its embedded-PCK ELF architecture and packaged identity for either x64 or ARM64. The macOS script validates the `.app` layout, metadata, embedded identity, and both `arm64` and `x86_64` Mach-O slices. Omit `-SkipFoundationGate` when building any cross-platform package independently. Every tester-facing rebuild must increment the displayed game/build version before export so packages remain distinguishable. Generated builds remain ignored by Git.
 
-The macOS beta is not yet signed or notarized. If Gatekeeper reports that `Super Star Fighter.app` is damaged even after using Control-click → Open, verify the supplied ZIP SHA-256, open Terminal in the extracted folder, run `xattr -cr "Super Star Fighter.app"`, and then use Control-click → Open again. A signed and notarized release will not require this workaround.
+The macOS beta is not yet signed or notarized. If Gatekeeper reports that `Edgegap Arena Shooter.app` is damaged even after using Control-click → Open, verify the supplied ZIP SHA-256, open Terminal in the extracted folder, run `xattr -cr "Edgegap Arena Shooter.app"`, and then use Control-click → Open again. A signed and notarized release will not require this workaround.
 
 ### Building without PowerShell
 
@@ -160,19 +162,19 @@ Packages, per-package audits, and a combined `SHA256SUMS.txt` are written to the
 Linux normally uses the project's Compatibility renderer through desktop OpenGL 3.3. Replace `NN` with the beta number in your file name. On Mesa systems that expose native OpenGL ES 3.0 but not desktop OpenGL 3.3, try:
 
 ```bash
-./SuperStarFighter-BetaNN.arm64 --rendering-method gl_compatibility --rendering-driver opengl3_es --verbose
+./EdgegapArenaShooter-BetaNN.arm64 --rendering-method gl_compatibility --rendering-driver opengl3_es --verbose
 ```
 
 On a Raspberry Pi or other ARM64 machine with a working Vulkan driver, the Mobile renderer is another possible fallback:
 
 ```bash
-./SuperStarFighter-BetaNN.arm64 --rendering-method mobile --rendering-driver vulkan --verbose
+./EdgegapArenaShooter-BetaNN.arm64 --rendering-method mobile --rendering-driver vulkan --verbose
 ```
 
 As a slow last resort with Mesa software rendering:
 
 ```bash
-LIBGL_ALWAYS_SOFTWARE=1 ./SuperStarFighter-BetaNN.arm64 --rendering-method gl_compatibility --rendering-driver opengl3 --verbose
+LIBGL_ALWAYS_SOFTWARE=1 ./EdgegapArenaShooter-BetaNN.arm64 --rendering-method gl_compatibility --rendering-driver opengl3 --verbose
 ```
 
 Use the `.x86_64` filename for Linux x64. These overrides are compatibility suggestions rather than native acceptance-tested configurations. Godot 4 requires at least OpenGL ES 3.0 for Compatibility; GLES 2-only systems are unsupported. Keep `--verbose` during diagnosis to confirm the selected API, renderer, and GPU.
@@ -203,7 +205,7 @@ The launcher prompts securely for the lobby password and, when administration is
 An unattended launch can provide protected one-line password files and a persistent ban file:
 
 ```powershell
-.\tools\start-server.ps1 -Port 7000 -ServerName "Friday Fight Night" -AdminPort 7001 -MaxPlayers 32 -RoundsToWin 3 -PasswordFile "C:\ServerSecrets\ssf-lobby.txt" -AdminPasswordFile "C:\ServerSecrets\ssf-admin.txt" -BanFile "C:\ServerData\ssf-bans.json"
+.\tools\start-server.ps1 -Port 7000 -ServerName "Friday Fight Night" -AdminPort 7001 -MaxPlayers 32 -RoundsToWin 3 -PasswordFile "C:\ServerSecrets\arena-shooter-lobby.txt" -AdminPasswordFile "C:\ServerSecrets\arena-shooter-admin.txt" -BanFile "C:\ServerData\arena-shooter-bans.json"
 ```
 
 For in-game administration alone, omit `-AdminPort` and keep `-AdminPasswordFile`. The server then opens only its gameplay TCP port.
@@ -228,7 +230,7 @@ Once connected, open **Admin** in the online lobby or **Server Admin** in the pa
 
 The Windows dedicated package includes unattended launch and administration scripts. Health reports continue while idle or paused; admin status includes uptime, recent metrics and their age. See the [dedicated server runbook](./docs/SERVER_README.txt) and [readiness validation](./docs/archive/SERVER-READINESS-2026-09-08.md) for launch commands, capacity gates and measured limits.
 
-Super Star Fighter carries all gameplay over one WebSocket (TCP) connection per player on the selected port, `7000` by default; forward that TCP port for internet play. LAN discovery separately uses UDP `7359` on the local subnet only and is never forwarded. Discovery is local-subnet convenience rather than public matchmaking. Internet hosting requires either forwarding that TCP port or running a Linux dedicated server behind a Cloudflare Tunnel with `--bind=127.0.0.1 --behind-proxy`, which players reach at `wss://your-hostname` on port 443 with no port forwarding ([setup](docs/MANUAL.md#47-hosting-behind-cloudflare-wss-on-port-443)); UPnP traversal is not implemented.
+Edgegap Arena Shooter carries all gameplay over one WebSocket (TCP) connection per player on the selected port, `7000` by default; forward that TCP port for internet play. LAN discovery separately uses UDP `7359` on the local subnet only and is never forwarded. Discovery is local-subnet convenience rather than public matchmaking. Internet hosting requires either forwarding that TCP port or running a Linux dedicated server behind a Cloudflare Tunnel with `--bind=127.0.0.1 --behind-proxy`, which players reach at `wss://your-hostname` on port 443 with no port forwarding ([setup](docs/MANUAL.md#47-hosting-behind-cloudflare-wss-on-port-443)); UPnP traversal is not implemented.
 
 See the [hosting chapter](./docs/MANUAL.md#4-hosting-and-joining) for practical LAN and internet setup.
 
@@ -265,6 +267,8 @@ Milestones 0–6 and the subsequent gameplay/presentation improvements are compl
 The current beta targets Windows x64, Linux x64, Linux ARM64/Raspberry Pi, and universal macOS, with outputs under `builds/beta-NN/`. Earlier betas remain archived separately. A stripped Windows dedicated-server build is available through `tools/build-server.ps1`, with resource auditing, standalone startup and a short packaged-server 32-client soak verified. Clean-machine testing, native distribution acceptance, longer representative-hardware performance testing, signing/notarization and final release acceptance remain. Public matchmaking, accounts, progression, chat, automatic NAT traversal, and manual map selection/voting are not part of the current slice.
 
 ## License and Assets
+
+Edgegap Arena Shooter is based on [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFighter) by Dumpster Fire Labs, used under the MIT License (Copyright (c) 2026 Dumpster Fire Labs, kept in [LICENSE](./LICENSE)). As the upstream [asset licence](./assets/LICENSE.md) asks, this fork uses a different name and does not include the upstream music or studio logo.
 
 The source code, scenes, data, tests, tools, and documentation are released under the [MIT License](./LICENSE). The bundled music and the Dumpster Fire Labs logo are **not** covered by it; they remain all rights reserved, and forks should replace them and use a different name. See [asset licensing](./assets/LICENSE.md) for the full breakdown. Any replacement music or sound effects must be original or properly licensed for the project.
 

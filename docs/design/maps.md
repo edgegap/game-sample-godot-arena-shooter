@@ -1,4 +1,4 @@
-# Super Star Fighter — Ten-Map Expansion Plan
+# Edgegap Arena Shooter — Ten-Map Expansion Plan
 
 **Status:** Ten-map roster, authoritative per-round rotation, and optional solar pulses, destructible cargo, and alternating blast doors are implemented. Freely moving terrain, portals, and manual lobby selection remain planned. See [Arena effects](../ARENA_EFFECTS.md) for the shipped prototype rules.
 
@@ -12,7 +12,7 @@ The current roster also includes Solar Crucible: a central solid star, randomize
 
 ## 1. Outcome
 
-Super Star Fighter has a ten-map static roster. The existing 3200×1800 arena remains the neutral competitive benchmark; nine additional arenas introduce materially different sightlines, routing, cover, and weapon interactions without changing the core ship or card rules.
+Edgegap Arena Shooter has a ten-map static roster. The existing 3200×1800 arena remains the neutral competitive benchmark; nine additional arenas introduce materially different sightlines, routing, cover, and weapon interactions without changing the core ship or card rules.
 
 Every map must support all 32 participants at once. “Supports 32” means every map definition contains exactly 32 simultaneously usable spawn anchors and passes automated clearance, separation, reachability, and hazard-safety checks. Lower-capacity matches use a server-shuffled subset of the same validated anchors.
 

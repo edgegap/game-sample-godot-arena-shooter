@@ -1,6 +1,6 @@
-# Super Star Fighter Design Language
+# Edgegap Arena Shooter Design Language
 
-Super Star Fighter uses a tactical cockpit language: quiet navy surfaces carry
+Edgegap Arena Shooter uses a tactical cockpit language: quiet navy surfaces carry
 information, while neon is reserved for identity, interaction, and state. The
 interface should feel energetic without making every control compete for
 attention.
