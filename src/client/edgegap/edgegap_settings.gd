@@ -1,4 +1,4 @@
-class_name EdgegapSettings
+class_name EdgegapGameSettings
 extends RefCounted
 
 ## Edgegap matchmaker settings for the FIND MATCH tab.
