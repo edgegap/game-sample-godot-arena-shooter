@@ -71,7 +71,10 @@ static func apply_command_line(configuration: Dictionary) -> void:
 ## Players the matchmaker put in this match (one ticket each), or 0 for a
 ## deployment started without the matchmaker.
 static func matched_player_count() -> int:
-	var parsed: Variant = JSON.parse_string(OS.get_environment("MM_TICKET_IDS"))
+	var text := OS.get_environment("MM_TICKET_IDS")
+	if text.is_empty():
+		return 0
+	var parsed: Variant = JSON.parse_string(text)
 	return (parsed as Array).size() if parsed is Array else 0
 
 

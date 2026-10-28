@@ -1,0 +1,5 @@
+# The Edgegap plugin builds its image with the project root as context.
+# Only the server export goes in: build/edgegap-linux-server.x86_64 + .pck.
+*
+!build/edgegap-linux-server.x86_64
+!build/edgegap-linux-server.pck

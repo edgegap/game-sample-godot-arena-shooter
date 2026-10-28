@@ -59,11 +59,11 @@ func _ready() -> void:
 	_http.timeout = 10.0
 	add_child(_http)
 	_poll_timer = Timer.new()
-	_poll_timer.wait_time = EdgegapSettings.POLL_SECONDS
+	_poll_timer.wait_time = EdgegapGameSettings.POLL_SECONDS
 	_poll_timer.timeout.connect(_poll)
 	add_child(_poll_timer)
-	_set_state(State.IDLE, "Ready." if EdgegapSettings.is_configured() else "Set the matchmaker URL and Auth Token in src/client/edgegap/edgegap_settings.gd.")
-	find_button.disabled = not EdgegapSettings.is_configured()
+	_set_state(State.IDLE, "Ready." if EdgegapGameSettings.is_configured() else "Set the matchmaker URL and Auth Token in src/client/edgegap/edgegap_settings.gd.")
+	find_button.disabled = not EdgegapGameSettings.is_configured()
 	# EDGEGAP_FIND_MATCH=1 starts searching once at launch, for automated tests.
 	if not OS.get_environment("EDGEGAP_FIND_MATCH").is_empty() and not _auto_search_done:
 		_auto_search_done = true
@@ -81,7 +81,7 @@ func _create_ticket() -> void:
 	_ensure_display_name()
 	_searching_since = Time.get_ticks_msec() / 1000.0
 	_set_state(State.CREATING, "Joining the queue…")
-	var body := JSON.stringify({"profile": EdgegapSettings.PROFILE, "attributes": {}})
+	var body := JSON.stringify({"profile": EdgegapGameSettings.PROFILE, "attributes": {}})
 	_send(HTTPClient.METHOD_POST, "/tickets", body, _on_ticket_created)
 
 
@@ -103,7 +103,7 @@ func _on_ticket_created(code: int, data: Variant) -> void:
 func _poll() -> void:
 	if ticket_id.is_empty() or _busy or state not in [State.SEARCHING, State.MATCH_FOUND]:
 		return
-	if Time.get_ticks_msec() / 1000.0 - _searching_since > EdgegapSettings.SEARCH_TIMEOUT_SECONDS:
+	if Time.get_ticks_msec() / 1000.0 - _searching_since > EdgegapGameSettings.SEARCH_TIMEOUT_SECONDS:
 		_cancel_ticket()
 		_fail("No match found in time. Try again.")
 		return
@@ -136,12 +136,12 @@ func _join_assignment(assignment: Variant) -> void:
 	if assignment is Dictionary:
 		fqdn = String(assignment.get("fqdn", ""))
 		var ports: Variant = assignment.get("ports", {})
-		if ports is Dictionary and ports.has(EdgegapSettings.PORT_NAME):
-			port = int((ports[EdgegapSettings.PORT_NAME] as Dictionary).get("external", 0))
+		if ports is Dictionary and ports.has(EdgegapGameSettings.PORT_NAME):
+			port = int((ports[EdgegapGameSettings.PORT_NAME] as Dictionary).get("external", 0))
 	if fqdn.is_empty() or port <= 0:
-		_fail("The server has no port named '%s'. Check the app version." % EdgegapSettings.PORT_NAME)
+		_fail("The server has no port named '%s'. Check the app version." % EdgegapGameSettings.PORT_NAME)
 		return
-	var scheme := "wss" if EdgegapSettings.USE_TLS else "ws"
+	var scheme := "wss" if EdgegapGameSettings.USE_TLS else "ws"
 	var url := "%s://%s:%d" % [scheme, fqdn, port]
 	print("EDGEGAP_MM assigned=%s" % url)
 	ticket_id = ""
@@ -187,7 +187,7 @@ func _set_state(next: State, message: String) -> void:
 	match next:
 		State.IDLE:
 			find_button.text = "FIND MATCH"
-			find_button.disabled = not EdgegapSettings.is_configured()
+			find_button.disabled = not EdgegapGameSettings.is_configured()
 		State.CREATING, State.SEARCHING:
 			find_button.text = "CANCEL"
 			find_button.disabled = false
@@ -198,7 +198,7 @@ func _set_state(next: State, message: String) -> void:
 
 ## One request at a time; DELETEs use their own node so a cancel never waits.
 func _send(method: int, path: String, body: String, on_done: Callable) -> void:
-	var headers := PackedStringArray(["Authorization: %s" % EdgegapSettings.auth_token()])
+	var headers := PackedStringArray(["Authorization: %s" % EdgegapGameSettings.auth_token()])
 	if not body.is_empty():
 		headers.append("Content-Type: application/json")
 	var http := _http
@@ -222,7 +222,7 @@ func _send(method: int, path: String, body: String, on_done: Callable) -> void:
 		if on_done.is_valid():
 			on_done.call(code, data)
 	, CONNECT_ONE_SHOT)
-	var error := http.request(EdgegapSettings.matchmaker_url() + path, headers, method, body)
+	var error := http.request(EdgegapGameSettings.matchmaker_url() + path, headers, method, body)
 	if error != OK:
 		if not owned:
 			_busy = false
