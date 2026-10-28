@@ -6,6 +6,7 @@
 
 # Generated exports, logs, and local reports
 builds/
+build/
 logs/
 reports/
 *.log
