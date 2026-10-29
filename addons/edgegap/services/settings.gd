@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapSettings
 
 const EdgegapConstants = preload("../constants.gd")
 const EdgegapPaths = preload("paths.gd")

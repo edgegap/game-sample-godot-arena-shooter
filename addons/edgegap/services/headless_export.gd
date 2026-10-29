@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapHeadlessExport
 
 const EdgegapLogger = preload("logger.gd")
 

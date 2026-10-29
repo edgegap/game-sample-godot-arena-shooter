@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapWizardApi
 
 ## Mirrors Unity EdgegapWizardApi / EdgegapApiBase:
 ## https://github.com/edgegap/edgegap-unity-plugin/blob/main/Editor/Api/EdgegapWizardApi.cs

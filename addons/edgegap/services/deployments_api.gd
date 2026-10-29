@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapDeploymentsApi
 
 ## Mirrors Unity EdgegapDeploymentsApi + EdgegapIpApi for the deploy section:
 ## POST v2/deployments, GET v1/status/{id}, GET v1/deployments, DELETE v1/stop/{id}, GET v1/ip

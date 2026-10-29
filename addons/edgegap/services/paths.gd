@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapPaths
 
 ## Resolves the addon root no matter where the plugin is installed under res://.
 static func addon_root() -> String:
