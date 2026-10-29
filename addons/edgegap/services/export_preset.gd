@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapExportPreset
 
 const EdgegapConstants = preload("../constants.gd")
 const EdgegapLogger = preload("logger.gd")

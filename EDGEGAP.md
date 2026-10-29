@@ -9,7 +9,7 @@ The game's server already runs the whole simulation, so nothing about the netcod
 | `src/shared/edgegap/edgegap_server.gd` | Server lifecycle on Edgegap: lobby password, auto start, NPC fill, self-stop |
 | `src/client/edgegap/edgegap_find_match.gd` | The FIND MATCH tab: matchmaker tickets, then join through Direct Connect |
 | `src/client/edgegap/edgegap_settings.gd` | Matchmaker URL, Auth Token, profile and port name |
-| `addons/edgegap/` | [Edgegap Servers Quickstart plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.9: exports, containerizes, uploads and deploys the server from the editor |
+| `addons/edgegap/` | [Edgegap Servers Quickstart plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.10: exports, containerizes, uploads and deploys the server from the editor |
 | `Edgegap Linux Server` preset, `.dockerignore` | What the plugin builds: the dedicated server export to `build/edgegap-linux-server`, and only that in the image |
 | `edgegap/matchmaker-config.json` | Matchmaker config: one `casual` profile, 2 to 4 players, solo after 20 s, tickets expire after 30 s |
 | `src/bootstrap.gd`, `src/server/server_main.gd`, `src/client/ui/connection_controller.gd` | One line each to call the above |
@@ -63,7 +63,11 @@ Client: `python tools/build.py build windows --skip-gate`. `EDGEGAP_FIND_MATCH=1
 
 ## Tested
 
-2026-10-28, Godot 4.7.2, Edgegap Servers Quickstart plugin 1.0.9:
+2026-10-29, plugin 1.0.10 (image `edgegap-arena-shooter:20261029-1305`):
+- Local container: nothing from the environment in the logs, and `docker stop` ends the server in 1 s (tini).
+- Direct deployment (Newark): logs start at the Godot banner, two bot clients over `wss://` played a full match, and the deployment stopped itself.
+
+2026-10-28, Godot 4.7.2, Edgegap Servers Quickstart plugin 1.0.9 (its Dockerfile printed the environment then):
 - Server built the plugin's way: the `Edgegap Linux Server` preset exported (`--export-debug`, as the dock does) and containerized with the plugin's default Dockerfile, no arguments.
 - Local container with simulated Edgegap env and two bot clients: auto start with 2 NPCs, `stopping reason="match over"`, the container exited 0.
 - Direct deployment (Toronto) of that image: two bot clients over `wss://` played a 3-round match, and the deployment stopped itself about 3 minutes after it started.

@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapAppApi
 
 ## Applications + versions for upload/deploy dropdowns (Unity EdgegapAppApi).
 

@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapConstants
 
 const PRESET_NAME := "Edgegap Linux Server"
 const DEFAULT_EXPORT_PATH := "build/edgegap-linux-server.x86_64"

@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapDocker
 
 const EdgegapConstants = preload("../constants.gd")
 const EdgegapLogger = preload("logger.gd")
