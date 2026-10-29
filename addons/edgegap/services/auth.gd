@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapAuth
 
 ## Token verification aligned with Unity EdgegapWindowV2.verifyApiTokenGetRegistryCreds:
 ## 1) POST /v1/wizard/init-quick-start (204)

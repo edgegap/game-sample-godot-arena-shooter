@@ -9,7 +9,7 @@ The game's server already runs the whole simulation, so nothing about the netcod
 | `src/shared/edgegap/edgegap_server.gd` | Server lifecycle on Edgegap: lobby password, auto start, NPC fill, self-stop |
 | `src/client/edgegap/edgegap_find_match.gd` | The FIND MATCH tab: matchmaker tickets, then join through Direct Connect |
 | `src/client/edgegap/edgegap_settings.gd` | Matchmaker URL, Auth Token, profile and port name |
-| `addons/edgegap/` | [Edgegap Servers Quickstart plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.9: exports, containerizes, uploads and deploys the server from the editor |
+| `addons/edgegap/` | [Edgegap Servers Quickstart plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.10: exports, containerizes, uploads and deploys the server from the editor |
 | `Edgegap Linux Server` preset, `.dockerignore` | What the plugin builds: the dedicated server export to `build/edgegap-linux-server`, and only that in the image |
 | `edgegap/matchmaker-config.json` | Matchmaker config: one `casual` profile, 2 to 4 players, solo after 20 s, tickets expire after 30 s |
 | `src/bootstrap.gd`, `src/server/server_main.gd`, `src/client/ui/connection_controller.gd` | One line each to call the above |

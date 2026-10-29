@@ -24,14 +24,14 @@ var _busy := false
 static var _auto_search_done := false
 
 
-## Adds the tab first in the connection tabs and selects it.
+## Adds the tab after the upstream tabs and selects it. Upstream code selects
+## its tabs by index (LAN 0, Direct Connect 1, Host 2), so they keep their place.
 static func install(connection_controller: Node, tabs: TabContainer) -> EdgegapFindMatch:
 	var tab := EdgegapFindMatch.new()
 	tab.name = "FIND MATCH"
 	tab.controller = connection_controller
 	tabs.add_child(tab)
-	tabs.move_child(tab, 0)
-	tabs.current_tab = 0
+	tabs.current_tab = tab.get_index()
 	return tab
 
 

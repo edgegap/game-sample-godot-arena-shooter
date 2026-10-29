@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapLogger
 
 static func info(message: String) -> void:
 	print("[Edgegap] ", message)
