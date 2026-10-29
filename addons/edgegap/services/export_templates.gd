@@ -1,5 +1,4 @@
 extends RefCounted
-class_name EdgegapExportTemplates
 
 ## Resolves Linux export templates for the *current* editor version.
 ## Matches Godot's VERSION_FULL_CONFIG rules (patch omitted when 0).
