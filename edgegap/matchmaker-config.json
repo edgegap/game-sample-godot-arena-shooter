@@ -9,7 +9,7 @@
       "group_inactivity_removal_period": "5m",
       "application": {
         "name": "godot-arena-shooter",
-        "version": "v1"
+        "version": "20261029-1305"
       },
       "rules": {
         "initial": {

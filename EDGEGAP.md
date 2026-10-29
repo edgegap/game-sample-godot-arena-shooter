@@ -63,7 +63,11 @@ Client: `python tools/build.py build windows --skip-gate`. `EDGEGAP_FIND_MATCH=1
 
 ## Tested
 
-2026-10-28, Godot 4.7.2, Edgegap Servers Quickstart plugin 1.0.9:
+2026-10-29, plugin 1.0.10 (image `edgegap-arena-shooter:20261029-1305`):
+- Local container: nothing from the environment in the logs, and `docker stop` ends the server in 1 s (tini).
+- Direct deployment (Newark): logs start at the Godot banner, two bot clients over `wss://` played a full match, and the deployment stopped itself.
+
+2026-10-28, Godot 4.7.2, Edgegap Servers Quickstart plugin 1.0.9 (its Dockerfile printed the environment then):
 - Server built the plugin's way: the `Edgegap Linux Server` preset exported (`--export-debug`, as the dock does) and containerized with the plugin's default Dockerfile, no arguments.
 - Local container with simulated Edgegap env and two bot clients: auto start with 2 NPCs, `stopping reason="match over"`, the container exited 0.
 - Direct deployment (Toronto) of that image: two bot clients over `wss://` played a 3-round match, and the deployment stopped itself about 3 minutes after it started.
