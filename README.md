@@ -2,6 +2,8 @@
 
 # Edgegap Arena Shooter
 
+![Add Edgegap matchmaking and dedicated game servers to a Godot 4 multiplayer arena shooter.](docs/screenshots/card.jpg)
+
 A fork of [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFighter) by Dumpster Fire Labs (MIT). The upstream licence does not let derivative works use the original game's name or the studio's name, so this fork has its own name; the documentation below is upstream's, adapted to the new name. See [License and Assets](#license-and-assets).
 
 Edgegap Arena Shooter is a top-down multiplayer arena shooter for up to 32 pilots. Every round you draft a new upgrade card, the cards stack without limit, and a sensible little starter ship slowly becomes a screen-filling mechanical disaster. Then you take it into the arena against your friends.
