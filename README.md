@@ -8,7 +8,7 @@ A fork of [Super Star Fighter](https://github.com/DumpsterFireLabs/SuperStarFigh
 
 Edgegap Arena Shooter is a top-down multiplayer arena shooter for up to 32 pilots. Every round you draft a new upgrade card, the cards stack without limit, and a sensible little starter ship slowly becomes a screen-filling mechanical disaster. Then you take it into the arena against your friends.
 
-> **On Edgegap, this sample was tested with up to 4 ships.** The shipped matchmaker config groups 2 to 4 players, and the server fills the match with NPCs up to 4 ships (`EDGEGAP_NPC_FILL`, default 4). The game itself supports up to 32 pilots, and a 32-pilot match should run on Edgegap if you raise the app version's vCPU (the shipped version uses 0.5 vCPU / 1 GB), the matchmaker's `max_team_size` (more players) and `EDGEGAP_NPC_FILL` (more NPCs). 32 pilots on Edgegap were not tested. See [EDGEGAP.md](EDGEGAP.md#playing-more-than-4-ships).
+> **On Edgegap, this sample runs matches of up to 4 ships.** The shipped matchmaker config groups 2 to 4 players, and the server fills the match with NPCs up to 4 ships (`EDGEGAP_NPC_FILL`, default 4). The game itself supports up to 32 pilots: for bigger matches, raise the app version's vCPU (the shipped version uses 0.5 vCPU / 1 GB), the matchmaker's `max_team_size` (more players) and `EDGEGAP_NPC_FILL` (more NPCs). See [EDGEGAP.md](EDGEGAP.md#playing-more-than-4-ships).
 
 **[Download the latest release](https://github.com/DumpsterFireLabs/SuperStarFighter/releases/latest)** for Windows, Linux (x64 and ARM64), or macOS, plus dedicated servers.
 
@@ -230,7 +230,7 @@ For remote command-line administration, forward a local port through SSH—`ssh 
 
 Once connected, open **Admin** in the online lobby or **Server Admin** in the pause menu and enter the separate admin password. The panel uses the existing game connection; players need no SSH access or admin port. It shows server status and players and supports moderation, live settings, match restart, and graceful shutdown. Restart begins a fresh match at round one and resets scores and builds. Because gameplay ENet traffic is not encrypted, use a long random admin password; the panel does not offer password rotation over that connection.
 
-The Windows dedicated package includes unattended launch and administration scripts. Health reports continue while idle or paused; admin status includes uptime, recent metrics and their age. See the [dedicated server runbook](./docs/SERVER_README.txt) and [readiness validation](./docs/archive/SERVER-READINESS-2026-09-08.md) for launch commands, capacity gates and measured limits.
+The Windows dedicated package includes unattended launch and administration scripts. Health reports continue while idle or paused; admin status includes uptime, recent metrics and their age. See the [dedicated server runbook](./docs/SERVER_README.txt) for launch commands and capacity settings.
 
 Edgegap Arena Shooter carries all gameplay over one WebSocket (TCP) connection per player on the selected port, `7000` by default; forward that TCP port for internet play. LAN discovery separately uses UDP `7359` on the local subnet only and is never forwarded. Discovery is local-subnet convenience rather than public matchmaking. Internet hosting requires either forwarding that TCP port or running a Linux dedicated server behind a Cloudflare Tunnel with `--bind=127.0.0.1 --behind-proxy`, which players reach at `wss://your-hostname` on port 443 with no port forwarding ([setup](docs/MANUAL.md#47-hosting-behind-cloudflare-wss-on-port-443)); UPnP traversal is not implemented.
 
@@ -260,7 +260,7 @@ Run the complete foundation gate:
 .\tools\verify-foundation.ps1
 ```
 
-The test and foundation commands report their actual assertion and check counts. See the [dated review and implementation evidence](./docs/archive/REVIEW-2026-09-03.md) for recorded results and their limits. Network, match-loop, NPC, local-host, presentation, hardening, smoke, export, and 32-client soak harnesses are also included under `tools/`; the [development guide](./docs/DEVELOPMENT.md#11-verification-matrix) explains when to use each one.
+The test and foundation commands report their actual assertion and check counts. Network, match-loop, NPC, local-host, presentation, hardening, smoke, export, and 32-client soak harnesses are also included under `tools/`; the [development guide](./docs/DEVELOPMENT.md#11-verification-matrix) explains when to use each one.
 
 ## Current Scope
 

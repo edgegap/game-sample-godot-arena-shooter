@@ -17,8 +17,6 @@ The catalog contains **137 cards**: 19 Common, 28 Uncommon, 29 Rare, 21 Epic, 18
 
 Mobile Bulwark retains +35% shield thrust and +15% drain at Uncommon; Pursuit Screen retains +30% shield thrust and −10% arc. Braking card descriptions now specify passive braking, and their detailed tooltips explain that it applies when movement input is released.
 
-See the [full review and first-pass notes](archive/CARD_BALANCE_REVIEW_2026-09-07.md) and [focused investigation](archive/CARD_BALANCE_FOCUSED_2026-09-07.md) for evidence, caveats, and remaining follow-ups.
-
 Multishot repeat scaling uses the review's explicit-preview mitigation: offers, inspection details, and confirmation show when the complete pick lowers potential burst or sustained DPS. The calculation uses the whole capped build, including fire rate, magazine size, and reload timing. It catches losses before the projectile cap and in mixed multishot builds. The underlying per-copy penalties and manual availability are unchanged; this addresses hidden output loss, not every possible weak repeat pick.
 
 ## Historical 120-card audit
