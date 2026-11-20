@@ -32,7 +32,7 @@ Server env vars (optional, on the app version): `EDGEGAP_NPC_FILL` (default 4, 0
 
 ## Playing more than 4 ships
 
-This sample was tested on Edgegap with up to 4 ships. The game supports up to 32 pilots (`GameConstants.MAX_PLAYERS`); the Edgegap server sizes the lobby to the larger of the matched player count and `EDGEGAP_NPC_FILL`. To go bigger, raise `max_team_size` in `edgegap/matchmaker-config.json` for more players and `EDGEGAP_NPC_FILL` for more NPCs, and give the app version more vCPU than the shipped 0.5 vCPU / 1 GB. A 32-pilot match should run that way, but it was not tested on Edgegap.
+On Edgegap, this sample runs matches of up to 4 ships. The game supports up to 32 pilots (`GameConstants.MAX_PLAYERS`); the Edgegap server sizes the lobby to the larger of the matched player count and `EDGEGAP_NPC_FILL`. To go bigger, raise `max_team_size` in `edgegap/matchmaker-config.json` for more players and `EDGEGAP_NPC_FILL` for more NPCs, and give the app version more vCPU than the shipped 0.5 vCPU / 1 GB.
 
 ## Build and deploy
 

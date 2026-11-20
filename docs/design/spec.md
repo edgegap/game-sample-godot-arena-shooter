@@ -670,7 +670,7 @@ The interface enforces 21 logical-pixel text minimums except deliberately hidden
 
 Stat-derived ship modules distinguish seven equipment families without changing collision or allegiance markers. Five quiet material families and numbered landmarks occupy existing collision cover only. Static material drawing remains cached.
 
-Authoritative match observations keep 128 completed heat records with contact, eliminated time, actual drafting, turnaround, builds, byes, and pickup cohorts. Server logs emit bounded summaries and participant rows; study JSON retains complete records. The repeatable bot study informs decisions but does not substitute for human counterplay or fairness acceptance. See `docs/archive/GAMEPLAY-STUDY-2026-09-03.md` for the dated evidence and limitations.
+Authoritative match observations keep 128 completed heat records with contact, eliminated time, actual drafting, turnaround, builds, byes, and pickup cohorts. Server logs emit bounded summaries and participant rows; study JSON retains complete records. The repeatable bot study informs decisions but does not substitute for human counterplay or fairness acceptance.
 
 ### Competitive combat viewport
 
